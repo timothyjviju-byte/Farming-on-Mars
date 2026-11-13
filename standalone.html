@@ -1,0 +1,2629 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARES-AGRI // Martian Biosphere & Extraterrestrial Agronomy</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            mars: {
+              50: '#fff5f2',
+              100: '#ffe8e1',
+              200: '#ffd4c7',
+              300: '#ffb29d',
+              400: '#ff7e5f',
+              500: '#f95738',
+              600: '#e53e1b',
+              700: '#c12c0e',
+              800: '#9b240e',
+              900: '#7e2212',
+              950: '#460d05',
+            },
+            bio: {
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+               glow: '#10b981',
+            },
+            space: {
+              900: '#0b0d13',
+              850: '#10141e',
+              800: '#161b29',
+              700: '#21293d',
+              600: '#323e5a',
+            }
+          },
+          fontFamily: {
+            mono: ['Courier New', 'Consolas', 'monospace'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+/* Custom CSS - Mars & Plant Extraterrestrial Biosphere Theme */
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mars Surface & Celestial Planets Fixed Panoramic Background */
+.mars-fixed-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: #040508;
+}
+
+.mars-panorama-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#mars-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.mars-atmosphere-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, transparent 30%, rgba(6, 8, 14, 0.35) 70%, rgba(4, 5, 10, 0.75) 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Body Styling - Clean Hardware-Accelerated Base */
+body {
+  background-color: #040508;
+  color: #f1f5f9;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Custom Scrollbar - Mars to Plant Theme */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #07090e;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #f95738 0%, #10b981 100%);
+  border-radius: 6px;
+  border: 2px solid #07090e;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff7e5f 0%, #34d399 100%);
+}
+
+/* Glassmorphism with Mars & Plant ambient tinting */
+.bg-space-850 {
+  background-color: rgba(14, 20, 32, 0.75) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-color: rgba(56, 73, 102, 0.55) !important;
+}
+
+.bg-space-900 {
+  background-color: rgba(9, 13, 20, 0.85) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Section divider with Mars & Plant bio-line */
+section {
+  position: relative;
+}
+
+section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(249, 87, 56, 0.3) 30%, rgba(16, 185, 129, 0.4) 70%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Glowing text and borders */
+.glow-mars {
+  box-shadow: 0 0 20px rgba(249, 87, 56, 0.35);
+}
+
+.glow-bio {
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.35);
+}
+
+.glow-mars-bio-border {
+  border-image: linear-gradient(135deg, rgba(249, 87, 56, 0.6), rgba(34, 197, 94, 0.6)) 1;
+}
+
+/* Sci-fi HUD corner accents (Mars Red & Bio Green) */
+.hud-box {
+  position: relative;
+  background-clip: padding-box;
+}
+
+.hud-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid #ff7e5f;
+  border-left: 2px solid #ff7e5f;
+  pointer-events: none;
+}
+
+.hud-box::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-bottom: 2px solid #22c55e;
+  border-right: 2px solid #22c55e;
+  pointer-events: none;
+}
+
+/* Interactive card hover sheen */
+.card-hover-bio:hover {
+  border-color: rgba(34, 197, 94, 0.6) !important;
+  box-shadow: 0 10px 25px -5px rgba(34, 197, 94, 0.15), 0 0 15px rgba(249, 87, 56, 0.1);
+}
+
+/* Botanical Pulse Animation */
+@keyframes bioPulse {
+  0%, 100% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 4px #22c55e);
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 12px #4ade80);
+  }
+}
+
+.animate-bio-pulse {
+  animation: bioPulse 3s ease-in-out infinite;
+}
+
+/* Range input styling - Plant Green and Mars Red */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #4ade80 40%, #16a34a 100%);
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.8), 0 0 4px rgba(249, 87, 56, 0.6);
+  border: 2px solid #ffffff;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+  box-shadow: 0 0 18px rgba(74, 222, 128, 1);
+}
+
+/* Mobile & Tablet Slider Optimization for Touch Targets */
+@media (max-width: 1024px) {
+  input[type="range"] {
+    height: 10px;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+/* Utility to hide scrollbar on touch scroll containers */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Subtle Botanical corner leaf SVG decorative watermark */
+.plant-watermark-left {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 260px;
+  height: 260px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.07'%3E%3Cpath fill='%2322c55e' d='M20,95 C20,50 50,20 95,20 C95,65 65,95 20,95 Z'/%3E%3Cpath stroke='%234ade80' stroke-width='2' fill='none' d='M20,95 Q55,60 95,20 M35,80 Q50,70 65,75 M50,65 Q65,55 80,60'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mars-watermark-right {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 320px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.08'%3E%3Ccircle cx='80' cy='20' r='50' fill='%23f95738'/%3E%3Cellipse cx='70' cy='25' rx='35' ry='12' fill='%23c12c0e' transform='rotate(-20 70 25)'/%3E%3Ccircle cx='60' cy='35' r='6' fill='%239b240e'/%3E%3Ccircle cx='78' cy='18' r='4' fill='%239b240e'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Adaptive Watermark scaling for Mobile and Tablet */
+@media (max-width: 768px) {
+  .plant-watermark-left {
+    width: 130px;
+    height: 130px;
+    opacity: 0.04;
+  }
+  .mars-watermark-right {
+    width: 150px;
+    height: 150px;
+    opacity: 0.04;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .plant-watermark-left {
+    width: 190px;
+    height: 190px;
+    opacity: 0.05;
+  }
+  .mars-watermark-right {
+    width: 230px;
+    height: 230px;
+    opacity: 0.06;
+  }
+}
+
+/* Custom print styles */
+@media print {
+  header, .mars-fixed-background, #mars-canvas, #audio-toggle-btn, .crop-filter-btn, #simulator, footer, .plant-watermark-left, .mars-watermark-right {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #000000 !important;
+  }
+  .bg-space-850, .bg-space-900 {
+    background: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+  }
+  h1, h2, h3, h4 {
+    color: #000000 !important;
+  }
+  p, span, td, th {
+    color: #1e293b !important;
+  }
+}
+
+</style>
+</head>
+<body class="text-slate-100 font-sans selection:bg-mars-500 selection:text-white min-h-screen overflow-x-hidden relative">
+
+  <!-- Fixed Panoramic Background: Mars Surface, Craters, Dunes & Celestial Planets -->
+  <div class="mars-fixed-background" aria-hidden="true">
+    <svg class="mars-panorama-svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Deep Space & Martian Atmospheric Twilight Gradient -->
+        <linearGradient id="sky-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#020306"/>
+          <stop offset="28%" stop-color="#090a14"/>
+          <stop offset="52%" stop-color="#190e16"/>
+          <stop offset="70%" stop-color="#3b120f"/>
+          <stop offset="85%" stop-color="#661d10"/>
+          <stop offset="96%" stop-color="#8a2712"/>
+          <stop offset="100%" stop-color="#a33216"/>
+        </linearGradient>
+
+        <!-- Cosmic Nebula Dust Flares -->
+        <radialGradient id="nebula-mars" cx="75%" cy="30%" r="55%">
+          <stop offset="0%" stop-color="rgba(249, 87, 56, 0.28)"/>
+          <stop offset="45%" stop-color="rgba(193, 44, 14, 0.12)"/>
+          <stop offset="100%" stop-color="rgba(0, 0, 0, 0)"/>
+        </radialGradient>
+        <radialGradient id="nebula-purple" cx="20%" cy="20%" r="45%">
+          <stop offset="0%" stop-color="rgba(147, 51, 234, 0.14)"/>
+          <stop offset="50%" stop-color="rgba(79, 70, 229, 0.05)"/>
+          <stop offset="100%" stop-color="rgba(0, 0, 0, 0)"/>
+        </radialGradient>
+
+        <!-- CELESTIAL PLANET 1: The Red Planet Mars in Orbit -->
+        <radialGradient id="mars-orb-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="65%" stop-color="rgba(255, 110, 75, 0.45)"/>
+          <stop offset="85%" stop-color="rgba(249, 87, 56, 0.2)"/>
+          <stop offset="100%" stop-color="rgba(249, 87, 56, 0)"/>
+        </radialGradient>
+
+        <radialGradient id="mars-body" cx="32%" cy="28%" r="68%">
+          <stop offset="0%" stop-color="#ffb099"/>
+          <stop offset="18%" stop-color="#f95738"/>
+          <stop offset="45%" stop-color="#c12c0e"/>
+          <stop offset="72%" stop-color="#731606"/>
+          <stop offset="92%" stop-color="#2d0502"/>
+          <stop offset="100%" stop-color="#0e0100"/>
+        </radialGradient>
+
+        <!-- Mars Polar Ice Cap -->
+        <linearGradient id="polar-cap" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="65%" stop-color="#e0f2fe"/>
+          <stop offset="100%" stop-color="rgba(224, 242, 254, 0)"/>
+        </linearGradient>
+
+        <!-- CELESTIAL PLANET 2: Moon Phobos with impact craters -->
+        <radialGradient id="phobos-body" cx="30%" cy="30%" r="65%">
+          <stop offset="0%" stop-color="#ede3d8"/>
+          <stop offset="25%" stop-color="#b0a497"/>
+          <stop offset="60%" stop-color="#63584e"/>
+          <stop offset="88%" stop-color="#26211d"/>
+          <stop offset="100%" stop-color="#080706"/>
+        </radialGradient>
+
+        <!-- CELESTIAL PLANET 3: Distant Earth "Pale Blue Dot" -->
+        <radialGradient id="earth-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="35%" stop-color="#38bdf8"/>
+          <stop offset="75%" stop-color="rgba(56, 189, 248, 0.4)"/>
+          <stop offset="100%" stop-color="rgba(56, 189, 248, 0)"/>
+        </radialGradient>
+
+        <!-- Mountain & Terrain Layer Gradients -->
+        <linearGradient id="mtn-distant" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#42140f"/>
+          <stop offset="60%" stop-color="#2b0a07"/>
+          <stop offset="100%" stop-color="#140302"/>
+        </linearGradient>
+
+        <linearGradient id="canyon-mid" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#6e1d10"/>
+          <stop offset="35%" stop-color="#54140a"/>
+          <stop offset="75%" stop-color="#350a05"/>
+          <stop offset="100%" stop-color="#1a0402"/>
+        </linearGradient>
+
+        <linearGradient id="dunes-front" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#992b15"/>
+          <stop offset="25%" stop-color="#7a1f0e"/>
+          <stop offset="60%" stop-color="#4c1006"/>
+          <stop offset="100%" stop-color="#1f0301"/>
+        </linearGradient>
+
+        <!-- Biodome Greenhouse Bioluminescent Green Glow -->
+        <radialGradient id="dome-glow-main" cx="50%" cy="55%" r="50%">
+          <stop offset="0%" stop-color="rgba(74, 222, 128, 0.7)"/>
+          <stop offset="45%" stop-color="rgba(34, 197, 94, 0.4)"/>
+          <stop offset="78%" stop-color="rgba(16, 185, 129, 0.15)"/>
+          <stop offset="100%" stop-color="rgba(0, 0, 0, 0)"/>
+        </radialGradient>
+      </defs>
+
+      <!-- 1. Deep Space Cosmic Sky -->
+      <rect width="1920" height="1080" fill="url(#sky-grad)"/>
+      <rect width="1920" height="1080" fill="url(#nebula-mars)"/>
+      <rect width="1920" height="1080" fill="url(#nebula-purple)"/>
+
+      <!-- 2. Rich Starfield Background -->
+      <g fill="#ffffff">
+        <circle cx="120" cy="80" r="1.4" opacity="0.9"/>
+        <circle cx="240" cy="140" r="1.0" opacity="0.7"/>
+        <circle cx="310" cy="65" r="1.8" opacity="0.95"/>
+        <circle cx="450" cy="180" r="0.9" opacity="0.6"/>
+        <circle cx="580" cy="95" r="1.3" opacity="0.85"/>
+        <circle cx="700" cy="130" r="1.1" opacity="0.75"/>
+        <circle cx="850" cy="70" r="1.7" opacity="0.9"/>
+        <circle cx="980" cy="160" r="1.2" opacity="0.8"/>
+        <circle cx="1120" cy="85" r="1.5" opacity="0.95"/>
+        <circle cx="1260" cy="140" r="0.9" opacity="0.65"/>
+        <circle cx="1380" cy="60" r="1.3" opacity="0.8"/>
+        <circle cx="1680" cy="110" r="1.6" opacity="0.9"/>
+        <circle cx="1820" cy="80" r="1.2" opacity="0.75"/>
+        <circle cx="180" cy="260" r="1.5" opacity="0.85"/>
+        <circle cx="280" cy="320" r="0.9" opacity="0.6"/>
+        <circle cx="510" cy="280" r="1.2" opacity="0.75"/>
+        <circle cx="680" cy="340" r="1.4" opacity="0.85"/>
+        <circle cx="890" cy="290" r="1.0" opacity="0.7"/>
+        <circle cx="1050" cy="310" r="1.6" opacity="0.9"/>
+        <circle cx="1210" cy="270" r="1.1" opacity="0.8"/>
+        <circle cx="1350" cy="350" r="1.3" opacity="0.85"/>
+        <circle cx="1740" cy="330" r="1.0" opacity="0.7"/>
+        <!-- Star clusters -->
+        <circle cx="920" cy="110" r="0.7" opacity="0.5"/>
+        <circle cx="925" cy="118" r="0.8" opacity="0.6"/>
+        <circle cx="932" cy="114" r="0.9" opacity="0.7"/>
+        <circle cx="160" cy="190" r="0.7" opacity="0.5"/>
+        <circle cx="166" cy="196" r="0.8" opacity="0.6"/>
+      </g>
+
+      <!-- 3. PLANET 1: The Red Planet Mars in Dramatic Orbit (Upper Right Sky) -->
+      <g transform="translate(1540, 240)">
+        <!-- Atmospheric Corona Glow -->
+        <circle cx="0" cy="0" r="160" fill="url(#mars-orb-glow)"/>
+        <!-- Planet Sphere -->
+        <circle cx="0" cy="0" r="130" fill="url(#mars-body)"/>
+
+        <!-- Surface Features: Dark Basalt Mare & Canyon Channels -->
+        <path d="M-60 -20 Q-20 -50 30 -30 T80 -10 Q50 30 10 20 T-50 40 Z" fill="#4d0e04" opacity="0.55"/>
+        <path d="M-80 15 Q-40 45 10 35 T70 50 Q40 80 -20 70 Z" fill="#360802" opacity="0.6"/>
+        <!-- Valles Marineris Canyon Fissure on Planet -->
+        <path d="M-40 5 Q0 12 55 -2 Q30 18 -35 15 Z" fill="#1f0301" opacity="0.75"/>
+        
+        <!-- Polar Ice Cap -->
+        <ellipse cx="10" cy="-115" rx="55" ry="18" fill="url(#polar-cap)" opacity="0.85"/>
+        <ellipse cx="15" cy="-118" rx="35" ry="10" fill="#ffffff" opacity="0.95"/>
+
+        <!-- Atmospheric Limb Glow Edge -->
+        <circle cx="0" cy="0" r="130" stroke="rgba(255, 175, 150, 0.45)" stroke-width="2.5" fill="none"/>
+        <path d="M-128 -20 A130 130 0 0 1 20 -128" stroke="rgba(255, 230, 215, 0.65)" stroke-width="3.5" fill="none" opacity="0.8"/>
+      </g>
+
+      <!-- 4. PLANET 2: Martian Moon Phobos (Upper Left Sky) -->
+      <g transform="translate(340, 190)">
+        <!-- Phobos Irregular Oblong Body -->
+        <ellipse cx="0" cy="0" rx="42" ry="34" fill="url(#phobos-body)" transform="rotate(-18)"/>
+        <!-- Stickney & Surface Impact Craters -->
+        <ellipse cx="-12" cy="-6" rx="14" ry="11" fill="#1c1613" opacity="0.75"/>
+        <ellipse cx="-14" cy="-8" rx="14" ry="11" stroke="rgba(237, 227, 216, 0.5)" stroke-width="1.2" fill="none"/>
+        <circle cx="16" cy="8" r="6" fill="#1c1613" opacity="0.6"/>
+        <circle cx="15" cy="7" r="6" stroke="rgba(237, 227, 216, 0.4)" stroke-width="1" fill="none"/>
+        <circle cx="-5" cy="15" r="4.5" fill="#140f0c" opacity="0.65"/>
+        <!-- Sunlit Edge Highlight -->
+        <path d="M-38 -10 A42 34 0 0 1 20 -30" stroke="rgba(255, 245, 235, 0.65)" stroke-width="2" fill="none"/>
+      </g>
+
+      <!-- 5. CELESTIAL PHENOMENON: Distant Earth & Moon ("Pale Blue Dot") -->
+      <g transform="translate(780, 170)">
+        <circle cx="0" cy="0" r="14" fill="url(#earth-glow)"/>
+        <circle cx="0" cy="0" r="4.5" fill="#38bdf8"/>
+        <circle cx="0" cy="0" r="2.2" fill="#ffffff"/>
+        <!-- Distant Terrestrial Moon Speck -->
+        <circle cx="11" cy="-6" r="1.3" fill="#cbd5e1"/>
+        <!-- 4-Point Starlight Diffraction Flare -->
+        <line x1="0" y1="-20" x2="0" y2="20" stroke="rgba(56, 189, 248, 0.8)" stroke-width="1"/>
+        <line x1="-20" y1="0" x2="20" y2="0" stroke="rgba(56, 189, 248, 0.8)" stroke-width="1"/>
+      </g>
+
+      <!-- 6. THE MARTIAN SURFACE: Layer 1 - Distant Caldera Ridge & Volcanic Peaks (Olympus Mons Range) -->
+      <path d="M0 640 
+               L0 550 
+               Q140 520 280 545 
+               T560 510 
+               Q720 480 880 520 
+               T1200 495 
+               Q1420 460 1640 515 
+               T1920 500 
+               L1920 640 Z" fill="url(#mtn-distant)"/>
+
+      <!-- Atmospheric Rust Dust Haze over Distant Horizon -->
+      <rect x="0" y="490" width="1920" height="90" fill="url(#nebula-mars)" opacity="0.6"/>
+
+      <!-- 7. THE MARTIAN SURFACE: Layer 2 - Midground Jagged Canyons & Crater Escarpments (Valles Marineris) -->
+      <path d="M0 760 
+               L0 610 
+               Q120 625 240 590 
+               T520 635 
+               Q700 580 860 620 
+               T1180 590 
+               Q1380 640 1560 595 
+               T1920 625 
+               L1920 760 Z" fill="url(#canyon-mid)"/>
+      
+      <!-- Canyon Stratified Rock Ridges -->
+      <path d="M0 620 Q260 600 520 645 T1080 610 T1620 625 T1920 630" stroke="#8a2715" stroke-width="2.5" fill="none" opacity="0.6"/>
+      <path d="M0 655 Q310 630 640 670 T1260 640 T1820 655 T1920 660" stroke="#a33216" stroke-width="2" fill="none" opacity="0.5"/>
+
+      <!-- 8. THE MARTIAN SURFACE: Layer 3 - Foreground Rolling Sand Dunes & Rocky Basalt Regolith -->
+      <path d="M0 1080 
+               L0 730 
+               Q180 770 380 725 
+               T820 765 
+               Q1060 710 1300 755 
+               T1740 720 
+               Q1840 735 1920 740 
+               L1920 1080 Z" fill="url(#dunes-front)"/>
+
+      <!-- Dune Wind Ripple Strata & Craters on the Foreground Terrain -->
+      <path d="M0 760 Q280 810 620 765 T1280 790 T1920 770" stroke="#b83a1a" stroke-width="3" fill="none" opacity="0.5"/>
+      <path d="M0 830 Q360 880 780 830 T1520 860 T1920 835" stroke="#7a1f0e" stroke-width="4" fill="none" opacity="0.6"/>
+      <path d="M0 920 Q440 980 960 925 T1680 950 T1920 925" stroke="#992b15" stroke-width="3" fill="none" opacity="0.4"/>
+
+      <!-- Surface Impact Craters on Jezero Crater Floor -->
+      <ellipse cx="260" cy="810" rx="48" ry="14" fill="#2d0703" opacity="0.75"/>
+      <ellipse cx="260" cy="812" rx="46" ry="12" stroke="#b83a1a" stroke-width="2" fill="none" opacity="0.7"/>
+
+      <ellipse cx="1680" cy="850" rx="65" ry="18" fill="#2d0703" opacity="0.75"/>
+      <ellipse cx="1680" cy="852" rx="63" ry="16" stroke="#b83a1a" stroke-width="2" fill="none" opacity="0.7"/>
+
+      <!-- 9. MARTIAN BIOSPHERES & GREENHOUSES GLOWING ON THE SURFACE -->
+      <!-- BIODOME 1: Main Colony Agriculture Biosphere Alpha (Center-Left) -->
+      <g transform="translate(560, 755)">
+        <!-- Green Plant Glow Aura radiating onto red soil -->
+        <ellipse cx="0" cy="10" rx="140" ry="75" fill="url(#dome-glow-main)"/>
+        
+        <!-- Interior Agricultural Greenery Silhouette -->
+        <ellipse cx="0" cy="0" rx="90" ry="55" fill="rgba(34, 197, 94, 0.45)"/>
+        
+        <!-- Geodesic Dome Exterior Arch -->
+        <ellipse cx="0" cy="0" rx="90" ry="55" fill="rgba(6, 78, 59, 0.3)" stroke="#4ade80" stroke-width="2.5"/>
+        
+        <!-- Geodesic Structural Lattice Ribs -->
+        <path d="M-60 0 Q-40 -45 0 -55 Q40 -45 60 0" stroke="#86efac" stroke-width="1.8" fill="none" opacity="0.8"/>
+        <path d="M-30 0 Q-20 -50 0 -55 Q20 -50 30 0" stroke="#86efac" stroke-width="1.5" fill="none" opacity="0.7"/>
+        <line x1="-90" y1="0" x2="90" y2="0" stroke="#4ade80" stroke-width="2.5"/>
+        
+        <!-- Base Airlock & Research Module -->
+        <rect x="-115" y="-12" width="28" height="14" rx="3" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+        <rect x="87" y="-12" width="28" height="14" rx="3" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+        
+        <!-- Sprout Glyph Marker inside Dome -->
+        <text x="-9" y="-14" font-size="20" fill="#ffffff" opacity="0.9">ðŸŒ±</text>
+      </g>
+
+      <!-- BIODOME 2: Photobioreactor Algae Silo Beta (Right Flank) -->
+      <g transform="translate(1380, 775)">
+        <ellipse cx="0" cy="10" rx="100" ry="50" fill="url(#dome-glow-main)"/>
+        <ellipse cx="0" cy="0" rx="65" ry="40" fill="rgba(16, 185, 129, 0.4)" stroke="#34d399" stroke-width="2"/>
+        <path d="M-40 0 Q-25 -32 0 -40 Q25 -32 40 0" stroke="#a7f3d0" stroke-width="1.5" fill="none" opacity="0.7"/>
+        <line x1="-65" y1="0" x2="65" y2="0" stroke="#34d399" stroke-width="2"/>
+        <text x="-7" y="-8" font-size="16" fill="#ffffff" opacity="0.85">ðŸŒ¿</text>
+      </g>
+
+      <!-- Expedition Communication Tower & Power Beacon -->
+      <g transform="translate(940, 735)">
+        <line x1="0" y1="0" x2="0" y2="-45" stroke="#94a3b8" stroke-width="2"/>
+        <line x1="-8" y1="-25" x2="8" y2="-25" stroke="#94a3b8" stroke-width="1.5"/>
+        <circle cx="0" cy="-48" r="3.5" fill="#f59e0b"/>
+        <circle cx="0" cy="-48" r="8" fill="none" stroke="#f59e0b" stroke-width="1" opacity="0.6"/>
+      </g>
+    </svg>
+
+    <!-- Interactive Canvas Overlay: Dust Storm Winds & Bioluminescent Plant Spores -->
+    <canvas id="mars-canvas"></canvas>
+
+    <!-- Vignette Framing -->
+    <div class="mars-atmosphere-vignette"></div>
+  </div>
+
+  <!-- Ambient Mars & Plant Corner Accents -->
+  <div class="plant-watermark-left"></div>
+  <div class="mars-watermark-right"></div>
+
+  <!-- Top Telemetry Ticker -->
+  <header class="relative z-20 border-b border-mars-900/60 bg-space-900/90 backdrop-blur-md sticky top-0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
+      <div class="flex items-center space-x-3">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-mars-500/20 text-mars-400 border border-mars-500/30 animate-pulse">
+          â— LIVE TELEMETRY
+        </span>
+        <span class="text-slate-400">HABITAT: <strong class="text-slate-200">ARES-BIODOME-04</strong></span>
+        <span class="hidden md:inline text-slate-500">|</span>
+        <span class="hidden md:inline text-slate-400">LOCATION: <strong class="text-slate-200">JEZERO CRATER (18.38Â°N 77.58Â°E)</strong></span>
+      </div>
+
+      <div class="flex items-center space-x-4 text-slate-400">
+        <div>SOL: <span id="martian-sol" class="text-mars-400 font-bold">142</span></div>
+        <div>MTC: <span id="martian-time" class="text-emerald-400 font-bold">14:32:08</span></div>
+        <!-- Ambient Habitat Audio Synthesizer Toggle -->
+        <button id="audio-toggle-btn" class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-space-800 hover:bg-space-700 text-slate-300 border border-slate-700 transition">
+          <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+          <span id="audio-status">Audio: OFF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between border-t border-slate-800/80">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-mars-500 to-amber-600 flex items-center justify-center shadow-lg shadow-mars-600/30 border border-mars-400/40 shrink-0">
+          <i data-lucide="sprout" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+        </div>
+        <div>
+          <span class="text-base sm:text-lg font-black tracking-wider text-white">ARES<span class="text-mars-400">AGRI</span></span>
+          <span class="hidden sm:block text-[10px] text-slate-400 tracking-widest uppercase">Martian Agronomy & Biosphere Systems</span>
+        </div>
+      </div>
+
+      <!-- Desktop Navigation Links (Laptop / Desktop) -->
+      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+        <a href="#overview" class="text-slate-300 hover:text-mars-400 transition">Overview</a>
+        <a href="#challenges" class="text-slate-300 hover:text-mars-400 transition">The Challenges</a>
+        <a href="#technologies" class="text-slate-300 hover:text-mars-400 transition">Farming Systems</a>
+        <a href="#crops" class="text-slate-300 hover:text-mars-400 transition">Crop Database</a>
+        <a href="#simulator" class="text-slate-300 hover:text-mars-400 transition text-emerald-400 flex items-center gap-1">
+          <i data-lucide="sliders" class="w-4 h-4"></i> Simulator
+        </a>
+        <a href="#comparison" class="text-slate-300 hover:text-mars-400 transition">Mars vs Earth</a>
+        <a href="#faq" class="text-slate-300 hover:text-mars-400 transition">Q&A</a>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="#simulator" class="hidden sm:inline-flex px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs font-semibold rounded-md bg-gradient-to-r from-mars-600 to-mars-500 hover:from-mars-500 hover:to-mars-400 text-white shadow-md shadow-mars-600/25 transition">
+          Launch Simulator
+        </a>
+
+        <!-- Mobile & Tablet Hamburger Toggle Button -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg bg-space-850 hover:bg-space-700 text-slate-200 border border-slate-700 focus:outline-none transition" aria-label="Toggle Navigation Menu">
+          <i data-lucide="menu" id="menu-icon" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile & Tablet Collapsible Menu Drawer -->
+    <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-800 bg-space-900/98 backdrop-blur-xl px-4 pt-3 pb-6 space-y-2 font-medium text-sm transition-all duration-300 shadow-2xl">
+      <a href="#overview" class="mobile-nav-link flex items-center gap-2.5 py-2.5 px-3 rounded-lg text-slate-300 hover:bg-space-800 hover:text-mars-400 transition">
+        <i data-lucide="globe" class="w-4 h-4 text-mars-400"></i> Overview
+      </a>
+      <a href="#challenges" class="mobile-nav-link flex items-center gap-2.5 py-2.5 px-3 rounded-lg text-slate-300 hover:bg-space-800 hover:text-mars-400 transition">
+        <i data-lucide="alert-triangle" class="w-4 h-4 text-red-400"></i> The 5 Challenges
+      </a>
+      <a href="#technologies" class="mobile-nav-link flex items-center gap-2.5 py-2.5 px-3 rounded-lg text-slate-300 hover:bg-space-800 hover:text-mars-400 transition">
+        <i data-lucide="layers" class="w-4 h-4 text-emerald-400"></i> Farming Systems
+      </a>
+      <a href="#crops" class="mobile-nav-link flex items-center gap-2.5 py-2.5 px-3 rounded-lg text-slate-300 hover:bg-space-800 hover:text-mars-400 transition">
+        <i data-lucide="sprout" class="w-4 h-4 text-emerald-400"></i> Crop Database
+      </a>
+      <a href="#simulator" class="mobile-nav-link flex items-center gap-2.5 py-2.5 px-3 rounded-lg text-emerald-400 hover:bg-space-800 font-semibold transition">
+        <i data-lucide="sliders" class="w-4 h-4"></i> Interactive Simulator
+      </a>
+      <a href="#comparison" class="mobile-nav-link flex items-center gap-2.5 py-2.5 px-3 rounded-lg text-slate-300 hover:bg-space-800 hover:text-cyan-400 transition">
+        <i data-lucide="scale" class="w-4 h-4 text-cyan-400"></i> Mars vs Earth Audit
+      </a>
+      <a href="#faq" class="mobile-nav-link flex items-center gap-2.5 py-2.5 px-3 rounded-lg text-slate-300 hover:bg-space-800 hover:text-amber-400 transition">
+        <i data-lucide="help-circle" class="w-4 h-4 text-amber-400"></i> Science Q&A
+      </a>
+      <div class="pt-3 border-t border-slate-800/80">
+        <a href="#simulator" class="mobile-nav-link w-full py-2.5 px-4 text-center text-xs font-bold rounded-lg bg-gradient-to-r from-mars-600 via-amber-600 to-emerald-600 text-white flex items-center justify-center gap-2 shadow-lg shadow-mars-600/30">
+          <i data-lucide="play" class="w-4 h-4"></i> Launch Habitat Simulator
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="overview" class="relative z-10 pt-16 pb-20 md:pt-24 md:pb-28 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-mars-950/80 border border-mars-500/40 text-mars-300 text-xs font-mono">
+            <span class="w-2 h-2 rounded-full bg-mars-400 animate-ping"></span>
+            EXTRATERRESTRIAL AGRONOMY BLUEPRINT
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-none text-white">
+            Cultivating Life on a <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-mars-400 via-amber-300 to-emerald-400">Dead World</span>
+          </h1>
+
+          <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
+            Surviving on Mars requires transforming barren, toxic regolith into fertile biomass. Explore how closed-loop biospheres, ISRU hydroponics, microbial bio-remediation, and hyper-tuned LED photonics make human settlement self-sustaining 225 million kilometers from Earth.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#technologies" class="px-6 py-3 rounded-lg bg-mars-500 hover:bg-mars-600 text-white font-medium text-sm transition shadow-lg shadow-mars-600/30 flex items-center gap-2">
+              <i data-lucide="layers" class="w-4 h-4"></i> Explore Systems
+            </a>
+            <a href="#simulator" class="px-6 py-3 rounded-lg bg-space-800 hover:bg-space-700 text-emerald-400 border border-emerald-500/30 font-medium text-sm transition flex items-center gap-2">
+              <i data-lucide="play-circle" class="w-4 h-4"></i> Run Greenhouse Sim
+            </a>
+            <button onclick="window.print()" class="px-4 py-3 rounded-lg bg-space-800 hover:bg-space-700 text-slate-300 border border-slate-700 font-medium text-sm transition flex items-center gap-2" title="Print or save mission briefing">
+              <i data-lucide="printer" class="w-4 h-4"></i> Briefing PDF
+            </button>
+          </div>
+
+          <!-- Quick Environment Specs -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-800 font-mono text-xs">
+            <div class="bg-space-850/80 p-3 rounded-lg border border-slate-800">
+              <div class="text-slate-400 text-[10px]">AVG TEMP</div>
+              <div class="text-lg font-bold text-cyan-400">-63Â°C</div>
+              <div class="text-[10px] text-slate-500">Min -140Â°C / Max +20Â°C</div>
+            </div>
+            <div class="bg-space-850/80 p-3 rounded-lg border border-slate-800">
+              <div class="text-slate-400 text-[10px]">SURFACE PRESSURE</div>
+              <div class="text-lg font-bold text-amber-400">0.636 kPa</div>
+              <div class="text-[10px] text-slate-500">~0.6% Earth pressure</div>
+            </div>
+            <div class="bg-space-850/80 p-3 rounded-lg border border-slate-800">
+              <div class="text-slate-400 text-[10px]">SOLAR FLUX</div>
+              <div class="text-lg font-bold text-yellow-300">590 W/mÂ²</div>
+              <div class="text-[10px] text-slate-500">~43% of Earth Solar</div>
+            </div>
+            <div class="bg-space-850/80 p-3 rounded-lg border border-slate-800">
+              <div class="text-slate-400 text-[10px]">GRAVITY</div>
+              <div class="text-lg font-bold text-purple-400">0.38 g</div>
+              <div class="text-[10px] text-slate-500">3.72 m/sÂ²</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Graphic: Mars Greenhouse Dome Cutaway Concept -->
+        <div class="lg:col-span-5 relative">
+          <div class="relative mx-auto max-w-md bg-space-850 border border-slate-700/80 rounded-2xl p-6 shadow-2xl shadow-mars-950/60 overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-60 h-60 bg-mars-600/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-60 h-60 bg-emerald-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="font-mono text-xs text-slate-300">BIOSPHERE CHAMBER A-1</span>
+              </div>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-space-700 text-slate-400">PRESSURE: 52 kPa</span>
+            </div>
+
+            <!-- Stylized Cutaway Display -->
+            <div class="py-6 space-y-4">
+              <!-- Tier 1: LED Ceiling -->
+              <div class="p-3 bg-gradient-to-r from-purple-950/40 via-red-950/40 to-blue-950/40 border border-purple-500/30 rounded-lg">
+                <div class="flex items-center justify-between text-xs font-mono text-purple-300 mb-1">
+                  <span>PHOTONIC CEILING</span>
+                  <span>PPFD: 850 Âµmol/mÂ²/s</span>
+                </div>
+                <div class="h-2 w-full bg-space-900 rounded-full overflow-hidden flex">
+                  <div class="w-3/5 bg-red-500"></div>
+                  <div class="w-1/5 bg-blue-500"></div>
+                  <div class="w-1/5 bg-amber-400"></div>
+                </div>
+                <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                  <span>660nm Deep Red</span>
+                  <span>450nm Royal Blue</span>
+                  <span>Far-Red 730nm</span>
+                </div>
+              </div>
+
+              <!-- Tier 2: Vertical Crops -->
+              <div class="p-4 bg-space-900/90 border border-emerald-500/30 rounded-lg space-y-2">
+                <div class="flex justify-between items-center text-xs">
+                  <span class="text-emerald-400 font-semibold flex items-center gap-1.5">
+                    <i data-lucide="leaf" class="w-3.5 h-3.5"></i> Vertical Aeroponics Rack 04
+                  </span>
+                  <span class="font-mono text-[11px] text-slate-400">98.4% Moisture Recycled</span>
+                </div>
+                <div class="grid grid-cols-4 gap-2 pt-1">
+                  <div class="text-center p-2 rounded bg-space-800/80 border border-emerald-900/60">
+                    <div class="text-base">ðŸ¥”</div>
+                    <div class="text-[10px] text-slate-300">Potatoes</div>
+                  </div>
+                  <div class="text-center p-2 rounded bg-space-800/80 border border-emerald-900/60">
+                    <div class="text-base">ðŸ¥¬</div>
+                    <div class="text-[10px] text-slate-300">Greens</div>
+                  </div>
+                  <div class="text-center p-2 rounded bg-space-800/80 border border-emerald-900/60">
+                    <div class="text-base">ðŸ§«</div>
+                    <div class="text-[10px] text-slate-300">Spirulina</div>
+                  </div>
+                  <div class="text-center p-2 rounded bg-space-800/80 border border-emerald-900/60">
+                    <div class="text-base">ðŸŒ±</div>
+                    <div class="text-[10px] text-slate-300">Soybeans</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tier 3: Substrate & Regolith Filter -->
+              <div class="p-3 bg-space-900/90 border border-mars-500/30 rounded-lg">
+                <div class="flex justify-between items-center text-xs font-mono text-mars-400">
+                  <span>REGOLITH SUB-LAYER</span>
+                  <span>PERCHLORATE REMEDIATION: 99.8%</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1 leading-normal">
+                  Leached FeO-rich basalt mixed with anaerobic digested human compost & mycorrhizal fungal networks.
+                </p>
+              </div>
+            </div>
+
+            <div class="pt-2 flex items-center justify-between text-xs text-slate-400 font-mono">
+              <span>Oâ‚‚ OUTPUT: +42.1 kg/sol</span>
+              <span class="text-emerald-400 font-semibold">STATUS: NOMINAL</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Challenges Section -->
+  <section id="challenges" class="relative z-10 py-16 bg-space-900/70 border-t border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="text-xs font-mono text-mars-400 tracking-wider uppercase mb-2">Hostile Environment Analysis</div>
+        <h2 class="text-3xl sm:text-4xl font-black text-white">The 5 Lethal Hurdles of Martian Farming</h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-3">
+          On Earth, soil is a living ecosystem nurtured over millions of years. On Mars, the surface is an arid, chemical wasteland that will instantly kill untreated Earth flora.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Challenge 1 -->
+        <div class="bg-space-850 p-6 rounded-xl border border-red-950/80 hover:border-mars-500/50 transition-all duration-300 group">
+          <div class="w-12 h-12 rounded-lg bg-red-950/50 border border-red-500/30 flex items-center justify-center text-red-400 mb-4 group-hover:scale-110 transition">
+            <i data-lucide="skull" class="w-6 h-6"></i>
+          </div>
+          <div class="text-xs font-mono text-red-400 mb-1">CHALLENGE 01</div>
+          <h3 class="text-lg font-bold text-white mb-2">Perchlorate-Laced Regolith</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Martian dirt contains <strong>0.5% to 1.0% toxic perchlorates</strong> (ClOâ‚„â»). These powerful oxidizing salts destroy plant cells, inhibit germination, and act as endocrine disruptors that render crops lethal for human consumption unless chemically or biologically neutralized.
+          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-xs text-mars-300 font-mono flex items-center gap-1">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400"></i> Solution: Water leaching & <em>Dechloromonas</em> bacteria
+          </div>
+        </div>
+
+        <!-- Challenge 2 -->
+        <div class="bg-space-850 p-6 rounded-xl border border-amber-950/80 hover:border-amber-500/50 transition-all duration-300 group">
+          <div class="w-12 h-12 rounded-lg bg-amber-950/50 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-4 group-hover:scale-110 transition">
+            <i data-lucide="gauge" class="w-6 h-6"></i>
+          </div>
+          <div class="text-xs font-mono text-amber-400 mb-1">CHALLENGE 02</div>
+          <h3 class="text-lg font-bold text-white mb-2">Near-Vacuum & Extreme Cold</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            At only 0.6 kPa (less than 1% of Earth's sea-level pressure), liquid water boils at ~6Â°C. Exposed plant cells rupture, stomata fail, and nocturnal temperatures plunge to -100Â°C. Crops must be housed inside heavily insulated, pressurized greenhouses maintained above 30 kPa.
+          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-xs text-amber-300 font-mono flex items-center gap-1">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400"></i> Solution: Pneumatic ETFE domes with thermal buffering
+          </div>
+        </div>
+
+        <!-- Challenge 3 -->
+        <div class="bg-space-850 p-6 rounded-xl border border-purple-950/80 hover:border-purple-500/50 transition-all duration-300 group">
+          <div class="w-12 h-12 rounded-lg bg-purple-950/50 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition">
+            <i data-lucide="sun-dim" class="w-6 h-6"></i>
+          </div>
+          <div class="text-xs font-mono text-purple-400 mb-1">CHALLENGE 03</div>
+          <h3 class="text-lg font-bold text-white mb-2">Solar Dimming & Global Dust Storms</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Due to the inverse-square law, Mars receives only <strong>43% of terrestrial solar irradiance</strong>. Furthermore, planet-encircling dust storms can blot out up to 99% of sunlight for 4 to 6 months at a time, making reliance on ambient solar energy fatal for crops.
+          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-xs text-purple-300 font-mono flex items-center gap-1">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400"></i> Solution: Nuclear (Kilopower) / LED artificial spectrums
+          </div>
+        </div>
+
+        <!-- Challenge 4 -->
+        <div class="bg-space-850 p-6 rounded-xl border border-blue-950/80 hover:border-blue-500/50 transition-all duration-300 group">
+          <div class="w-12 h-12 rounded-lg bg-blue-950/50 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-4 group-hover:scale-110 transition">
+            <i data-lucide="shield-alert" class="w-6 h-6"></i>
+          </div>
+          <div class="text-xs font-mono text-blue-400 mb-1">CHALLENGE 04</div>
+          <h3 class="text-lg font-bold text-white mb-2">Galactic Cosmic Radiation (GCR)</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Lacking a global magnetosphere and a dense atmosphere, Mars is bombarded by solar flare protons and heavy high-energy cosmic ions. Plants experience DNA fragmentation, rapid somatic mutation, reduced fertility, and severe yield degradation without shielding.
+          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-xs text-blue-300 font-mono flex items-center gap-1">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400"></i> Solution: Subterranean lava tube vaults & water regolith berms
+          </div>
+        </div>
+
+        <!-- Challenge 5 -->
+        <div class="bg-space-850 p-6 rounded-xl border border-emerald-950/80 hover:border-emerald-500/50 transition-all duration-300 group">
+          <div class="w-12 h-12 rounded-lg bg-emerald-950/50 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-4 group-hover:scale-110 transition">
+            <i data-lucide="orbit" class="w-6 h-6"></i>
+          </div>
+          <div class="text-xs font-mono text-emerald-400 mb-1">CHALLENGE 05</div>
+          <h3 class="text-lg font-bold text-white mb-2">Partial Gravity (0.38g) Fluid Dynamics</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            In 38% gravity, water capillary dynamics, convection currents, and soil water percolation behave abnormally. Roots can suffocate in stagnant water pockets due to reduced buoyancy-driven ventilation and sluggish stomatal gas exchange.
+          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-xs text-emerald-300 font-mono flex items-center gap-1">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400"></i> Solution: Forced-air root aeration & aeroponic atomizers
+          </div>
+        </div>
+
+        <!-- Challenge 6 / Nitrogen & Biology -->
+        <div class="bg-space-850 p-6 rounded-xl border border-cyan-950/80 hover:border-cyan-500/50 transition-all duration-300 group">
+          <div class="w-12 h-12 rounded-lg bg-cyan-950/50 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition">
+            <i data-lucide="atom" class="w-6 h-6"></i>
+          </div>
+          <div class="text-xs font-mono text-cyan-400 mb-1">CHALLENGE 06</div>
+          <h3 class="text-lg font-bold text-white mb-2">Total Lack of Reactive Nitrogen</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Earth soils have billions of years of biological nitrogen fixation. Mars has inert atmospheric Nâ‚‚ (1.9%) and zero nitrates. Without industrial Haber-Bosch reactors or diazotrophic cyanobacteria, protein synthesis in plants is impossible.
+          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-xs text-cyan-300 font-mono flex items-center gap-1">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400"></i> Solution: Plasma nitrogen fixation & Rhizobium inoculation
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Agronomy & Agricultural Technologies -->
+  <section id="technologies" class="relative z-10 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <div class="text-xs font-mono text-emerald-400 tracking-wider uppercase mb-1">Engineering Survival</div>
+          <h2 class="text-3xl sm:text-4xl font-black text-white">Three Agricultural Paradigms</h2>
+        </div>
+        <p class="text-slate-400 text-sm max-w-md mt-4 md:mt-0">
+          Comparing the three viable methodologies for sustaining a self-sufficient colony of 50 to 1,000 Martian colonists.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        
+        <!-- Paradigm 1: Aeroponics -->
+        <div class="bg-space-850 rounded-2xl border border-slate-800 overflow-hidden flex flex-col hover:border-emerald-500/40 transition">
+          <div class="p-6 bg-gradient-to-b from-emerald-950/30 to-transparent border-b border-slate-800">
+            <div class="flex justify-between items-center mb-3">
+              <span class="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono text-xs font-bold">PARADIGM A</span>
+              <span class="text-xs font-mono text-slate-400">Efficiency: 98%</span>
+            </div>
+            <h3 class="text-xl font-bold text-white">High-Pressure Aeroponics</h3>
+            <p class="text-slate-400 text-xs mt-1">Mist-based root suspension with zero soil requirement.</p>
+          </div>
+          <div class="p-6 flex-1 space-y-4 text-sm text-slate-300">
+            <p>
+              Roots hang suspended in sealed, darkened chambers where ultrasonic nozzles deliver a 30â€“50 micron aerosol mist containing exact ratios of nitrates, potassium, and phosphorus.
+            </p>
+            <div class="space-y-2 text-xs font-mono">
+              <div class="flex justify-between py-1 border-b border-slate-800">
+                <span class="text-slate-400">Water Consumption:</span>
+                <span class="text-emerald-400 font-bold">5% vs Earth Field Farming</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-slate-800">
+                <span class="text-slate-400">Growth Rate:</span>
+                <span class="text-emerald-400 font-bold">+30% faster cycle</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-slate-800">
+                <span class="text-slate-400">Weight Payload:</span>
+                <span class="text-emerald-400 font-bold">Ultra-lightweight</span>
+              </div>
+              <div class="flex justify-between py-1">
+                <span class="text-slate-400">Vulnerability:</span>
+                <span class="text-mars-400 font-bold">High (nozzle clogging / power loss)</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-4 bg-space-900 border-t border-slate-800 text-xs text-slate-400">
+            <strong class="text-slate-200">Best For:</strong> Leafy greens, herbs, strawberries, radishes, microgreens.
+          </div>
+        </div>
+
+        <!-- Paradigm 2: Bio-Remediated Regolith -->
+        <div class="bg-space-850 rounded-2xl border border-slate-800 overflow-hidden flex flex-col hover:border-mars-500/40 transition">
+          <div class="p-6 bg-gradient-to-b from-mars-950/30 to-transparent border-b border-slate-800">
+            <div class="flex justify-between items-center mb-3">
+              <span class="px-2.5 py-1 rounded bg-mars-500/10 text-mars-400 border border-mars-500/20 font-mono text-xs font-bold">PARADIGM B</span>
+              <span class="text-xs font-mono text-slate-400">ISRU Utilization: 95%</span>
+            </div>
+            <h3 class="text-xl font-bold text-white">Bio-Remediated Regolith</h3>
+            <p class="text-slate-400 text-xs mt-1">Transforming crushed Martian rock into true organic soil.</p>
+          </div>
+          <div class="p-6 flex-1 space-y-4 text-sm text-slate-300">
+            <p>
+              In-Situ Resource Utilization (ISRU): Wash regolith to dissolve perchlorates, blend with pyrolyzed biochar, recycled composted crew wastes, and inoculate with vesicular-arbuscular mycorrhizal fungi.
+            </p>
+            <div class="space-y-2 text-xs font-mono">
+              <div class="flex justify-between py-1 border-b border-slate-800">
+                <span class="text-slate-400">Water Consumption:</span>
+                <span class="text-amber-400 font-bold">Moderate (buffering capacity)</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-slate-800">
+                <span class="text-slate-400">Growth Rate:</span>
+                <span class="text-slate-300 font-bold">Standard Earth baseline</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-slate-800">
+                <span class="text-slate-400">Payload Requirement:</span>
+                <span class="text-emerald-400 font-bold">Zero Earth substrate shipped</span>
+              </div>
+              <div class="flex justify-between py-1">
+                <span class="text-slate-400">Resilience:</span>
+                <span class="text-emerald-400 font-bold">High (thermal/moisture reservoir)</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-4 bg-space-900 border-t border-slate-800 text-xs text-slate-400">
+            <strong class="text-slate-200">Best For:</strong> Root crops, potatoes, sweet potatoes, legumes, grains.
+          </div>
+        </div>
+
+        <!-- Paradigm 3: Algae & Cyanobacteria Bioreactors -->
+        <div class="bg-space-850 rounded-2xl border border-slate-800 overflow-hidden flex flex-col hover:border-cyan-500/40 transition">
+          <div class="p-6 bg-gradient-to-b from-cyan-950/30 to-transparent border-b border-slate-800">
+            <div class="flex justify-between items-center mb-3">
+              <span class="px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono text-xs font-bold">PARADIGM C</span>
+              <span class="text-xs font-mono text-slate-400">Protein Speed: 10x</span>
+            </div>
+            <h3 class="text-xl font-bold text-white">Photobioreactors (PBR)</h3>
+            <p class="text-slate-400 text-xs mt-1">Spirulina, Chlorella & Anabaena closed vertical tubes.</p>
+          </div>
+          <div class="p-6 flex-1 space-y-4 text-sm text-slate-300">
+            <p>
+              Liquid culture microalgae circulating through illuminated glass helical tubes. Photosynthesizes at 10x the efficiency of terrestrial plants, directly converting Martian COâ‚‚ into oxygen and edible protein paste.
+            </p>
+            <div class="space-y-2 text-xs font-mono">
+              <div class="flex justify-between py-1 border-b border-slate-800">
+                <span class="text-slate-400">Protein Content:</span>
+                <span class="text-cyan-400 font-bold">60â€“70% Dry Weight</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-slate-800">
+                <span class="text-slate-400">Doubling Time:</span>
+                <span class="text-cyan-400 font-bold">24 to 48 Hours</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-slate-800">
+                <span class="text-slate-400">Oâ‚‚ Production:</span>
+                <span class="text-cyan-400 font-bold">Massive (1.2 kg Oâ‚‚ per kg algae)</span>
+              </div>
+              <div class="flex justify-between py-1">
+                <span class="text-slate-400">Colony Morale:</span>
+                <span class="text-amber-400 font-bold">Low palatability (supplement)</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-4 bg-space-900 border-t border-slate-800 text-xs text-slate-400">
+            <strong class="text-slate-200">Best For:</strong> Emergency protein supply, oxygen generation, bio-fertilizer.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Closed-Loop Biosphere Architecture -->
+  <section class="relative z-10 py-16 bg-space-900/60 border-t border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-2">Zero Waste Ecology</div>
+        <h2 class="text-3xl sm:text-4xl font-black text-white">The Closed-Loop Biosphere (ECLSS)</h2>
+        <p class="text-slate-400 text-sm mt-3">
+          On Mars, nothing can be thrown away. Every exhaled breath, drop of perspiration, and gram of biomass must circulate continuously through physical, chemical, and biological recycle loops.
+        </p>
+      </div>
+
+      <!-- Interactive Flow Nodes (1 Col Mobile, 2 Col Tablet, 4 Col Laptop) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="p-5 bg-space-850 rounded-xl border border-slate-700 relative">
+          <div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold font-mono text-sm mb-3">1</div>
+          <h4 class="font-bold text-white text-base">Human Habitat</h4>
+          <p class="text-xs text-slate-400 mt-2">
+            6-person expedition crew consumes ~18,000 kcal/sol, 15L potable water, and produces 6kg of COâ‚‚ plus urine and fecal biosolids.
+          </p>
+          <div class="mt-4 text-[11px] font-mono text-blue-400 bg-space-900 p-2 rounded">
+            Output: COâ‚‚ + Graywater + Biosolids
+          </div>
+        </div>
+
+        <div class="p-5 bg-space-850 rounded-xl border border-slate-700 relative">
+          <div class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold font-mono text-sm mb-3">2</div>
+          <h4 class="font-bold text-white text-base">Pyrolysis & Waste Refining</h4>
+          <p class="text-xs text-slate-400 mt-2">
+            Supercritical water oxidation (SCWO) and high-temp pyrolysis sterilize pathogens, generating sterile biochar and ammonia-rich liquid fertilizer.
+          </p>
+          <div class="mt-4 text-[11px] font-mono text-amber-400 bg-space-900 p-2 rounded">
+            Output: Clean N-P-K Solution + Biochar
+          </div>
+        </div>
+
+        <div class="p-5 bg-space-850 rounded-xl border border-emerald-500/50 relative shadow-lg shadow-emerald-950/40">
+          <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold font-mono text-sm mb-3">3</div>
+          <h4 class="font-bold text-white text-base">Greenhouse Bio-Domes</h4>
+          <p class="text-xs text-slate-400 mt-2">
+            Crops absorb elevated COâ‚‚ (1,200 ppm) under 20-hour LED cycles, transpiring pristine pure water vapor into the air condensers.
+          </p>
+          <div class="mt-4 text-[11px] font-mono text-emerald-400 bg-space-900 p-2 rounded">
+            Output: Fresh Oâ‚‚ + Pure Condensate Hâ‚‚O
+          </div>
+        </div>
+
+        <div class="p-5 bg-space-850 rounded-xl border border-slate-700 relative">
+          <div class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold font-mono text-sm mb-3">4</div>
+          <h4 class="font-bold text-white text-base">Harvest & Diet Integration</h4>
+          <p class="text-xs text-slate-400 mt-2">
+            Fresh caloric tubers, antioxidant microgreens, and algal protein harvested daily, completely eliminating scurvy, muscle loss, and psychological fatigue.
+          </p>
+          <div class="mt-4 text-[11px] font-mono text-purple-400 bg-space-900 p-2 rounded">
+            Output: 100% Caloric Self-Sufficiency
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Martian Crop Database (Interactive Filtering) -->
+  <section id="crops" class="relative z-10 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+        <div>
+          <div class="text-xs font-mono text-mars-400 tracking-wider uppercase mb-1">Botanical Selection Matrix</div>
+          <h2 class="text-3xl sm:text-4xl font-black text-white">Martian Priority Crop Catalog</h2>
+          <p class="text-slate-400 text-sm mt-1">Species selected for high harvest index, nutritional density, and environmental resilience.</p>
+        </div>
+
+        <!-- Filter Buttons (Horizontal Scroll on Mobile/Tablet, Wrapped on Laptop) -->
+        <div class="flex items-center gap-2 mt-4 md:mt-0 font-mono text-xs overflow-x-auto pb-2 md:pb-0 scrollbar-none max-w-full">
+          <button class="crop-filter-btn active shrink-0 px-3.5 py-2 sm:py-1.5 rounded-lg bg-mars-500 text-white font-bold transition min-h-[40px] sm:min-h-[32px] flex items-center justify-center shadow-sm" data-filter="all">All Species</button>
+          <button class="crop-filter-btn shrink-0 px-3.5 py-2 sm:py-1.5 rounded-lg bg-space-800 hover:bg-space-700 text-slate-300 transition min-h-[40px] sm:min-h-[32px] flex items-center justify-center border border-slate-700/60" data-filter="calories">High Calorie</button>
+          <button class="crop-filter-btn shrink-0 px-3.5 py-2 sm:py-1.5 rounded-lg bg-space-800 hover:bg-space-700 text-slate-300 transition min-h-[40px] sm:min-h-[32px] flex items-center justify-center border border-slate-700/60" data-filter="protein">High Protein</button>
+          <button class="crop-filter-btn shrink-0 px-3.5 py-2 sm:py-1.5 rounded-lg bg-space-800 hover:bg-space-700 text-slate-300 transition min-h-[40px] sm:min-h-[32px] flex items-center justify-center border border-slate-700/60" data-filter="fast">Rapid Harvest</button>
+          <button class="crop-filter-btn shrink-0 px-3.5 py-2 sm:py-1.5 rounded-lg bg-space-800 hover:bg-space-700 text-slate-300 transition min-h-[40px] sm:min-h-[32px] flex items-center justify-center border border-slate-700/60" data-filter="regolith">Regolith Hardy</button>
+        </div>
+      </div>
+
+      <!-- Crops Grid -->
+      <div id="crops-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Rendered dynamically via JavaScript in app.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive Martian Greenhouse Simulator -->
+  <section id="simulator" class="relative z-10 py-16 bg-gradient-to-b from-space-900 via-space-850 to-space-900 border-t border-b border-emerald-900/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 text-xs font-mono">
+          <i data-lucide="cpu" class="w-3.5 h-3.5"></i> REAL-TIME HABITAT AGRI-SIMULATOR v2.4
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white mt-3">Martian Greenhouse Command Unit</h2>
+        <p class="text-slate-400 text-sm mt-2">
+          Adjust the environmental controls below to observe real-time crop yields, oxygen generation, caloric output, and overall colony survival viability.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Controls Column (Left) -->
+        <div class="lg:col-span-7 bg-space-850 p-6 sm:p-8 rounded-2xl border border-slate-700 shadow-xl space-y-6">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 class="font-bold text-white text-lg flex items-center gap-2">
+              <i data-lucide="sliders-horizontal" class="w-5 h-5 text-emerald-400"></i> Environmental Controls
+            </h3>
+            <button id="reset-sim-btn" class="text-xs font-mono text-slate-400 hover:text-white transition flex items-center gap-1">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset Defaults
+            </button>
+          </div>
+
+          <!-- Slider 1: Atmospheric Pressure -->
+          <div class="space-y-2">
+            <div class="flex justify-between text-xs font-mono">
+              <label for="param-pressure" class="text-slate-300 font-bold">Dome Atmospheric Pressure (kPa)</label>
+              <span id="val-pressure" class="text-emerald-400 font-bold">50 kPa</span>
+            </div>
+            <input type="range" id="param-pressure" min="5" max="101" value="50" step="1" class="w-full h-2 bg-space-700 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+            <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+              <span>0.6 kPa (Martian ambient)</span>
+              <span>30 kPa (Plant threshold)</span>
+              <span>101.3 kPa (Earth sea level)</span>
+            </div>
+          </div>
+
+          <!-- Slider 2: CO2 Concentration -->
+          <div class="space-y-2">
+            <div class="flex justify-between text-xs font-mono">
+              <label for="param-co2" class="text-slate-300 font-bold">COâ‚‚ Atmospheric Enrichment (ppm)</label>
+              <span id="val-co2" class="text-cyan-400 font-bold">1,200 ppm</span>
+            </div>
+            <input type="range" id="param-co2" min="300" max="3000" value="1200" step="50" class="w-full h-2 bg-space-700 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+            <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+              <span>420 ppm (Earth ambient)</span>
+              <span>1,200 ppm (Optimal greenhouse)</span>
+              <span>3,000 ppm (Toxicity ceiling)</span>
+            </div>
+          </div>
+
+          <!-- Slider 3: Photoperiod (LED Light Hours) -->
+          <div class="space-y-2">
+            <div class="flex justify-between text-xs font-mono">
+              <label for="param-photoperiod" class="text-slate-300 font-bold">Photoperiod / LED Exposure (Hours/Sol)</label>
+              <span id="val-photoperiod" class="text-yellow-400 font-bold">18 hrs/sol</span>
+            </div>
+            <input type="range" id="param-photoperiod" min="6" max="24" value="18" step="1" class="w-full h-2 bg-space-700 rounded-lg appearance-none cursor-pointer accent-yellow-400">
+            <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+              <span>6 hrs (Severe deficit)</span>
+              <span>16-18 hrs (High yield)</span>
+              <span>24 hrs (Continuous light)</span>
+            </div>
+          </div>
+
+          <!-- Slider 4: Water Recycling Loop -->
+          <div class="space-y-2">
+            <div class="flex justify-between text-xs font-mono">
+              <label for="param-water-loop" class="text-slate-300 font-bold">Closed-Loop Water Recovery Rate (%)</label>
+              <span id="val-water-loop" class="text-blue-400 font-bold">96%</span>
+            </div>
+            <input type="range" id="param-water-loop" min="70" max="99" value="96" step="1" class="w-full h-2 bg-space-700 rounded-lg appearance-none cursor-pointer accent-blue-500">
+            <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+              <span>70% (Rapid depletion)</span>
+              <span>90% (ISS baseline)</span>
+              <span>99% (Self-sufficient target)</span>
+            </div>
+          </div>
+
+          <!-- Slider 5: Temperature -->
+          <div class="space-y-2">
+            <div class="flex justify-between text-xs font-mono">
+              <label for="param-temp" class="text-slate-300 font-bold">Chamber Temperature (Â°C)</label>
+              <span id="val-temp" class="text-amber-400 font-bold">22Â°C</span>
+            </div>
+            <input type="range" id="param-temp" min="5" max="35" value="22" step="1" class="w-full h-2 bg-space-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+            <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+              <span>5Â°C (Stunted growth)</span>
+              <span>20Â°Câ€“24Â°C (Optimum)</span>
+              <span>35Â°C (Thermal stress)</span>
+            </div>
+          </div>
+
+          <!-- Select 6: Cultivation Medium -->
+          <div class="space-y-2">
+            <label for="param-medium" class="text-xs font-mono text-slate-300 font-bold">Cultivation Substrate Architecture</label>
+            <select id="param-medium" class="w-full bg-space-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-sans focus:outline-none focus:border-emerald-500">
+              <option value="aeroponics">Ultrasonic High-Pressure Aeroponics (Maximum water efficiency)</option>
+              <option value="hydroponics">Deep Water Culture (DWC) Hydroponics (Stable buffering)</option>
+              <option value="regolith-remediated" selected>Leached Martian Regolith + Compost + Biochar (High mineral availability)</option>
+              <option value="raw-regolith">Raw Unwashed Martian Regolith (Extreme perchlorate hazard)</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Telemetry & Results Readout (Right) -->
+        <div class="lg:col-span-5 space-y-6">
+          
+          <!-- Viability Status Card -->
+          <div id="status-card" class="p-6 rounded-2xl bg-space-850 border border-emerald-500/40 shadow-2xl relative overflow-hidden">
+            <div class="text-xs font-mono text-slate-400 uppercase tracking-wider">Mission Colony Viability</div>
+            
+            <div class="flex items-baseline justify-between mt-2">
+              <div id="viability-rating" class="text-3xl sm:text-4xl font-black text-emerald-400">OPTIMAL</div>
+              <div class="text-right">
+                <span id="viability-score" class="text-2xl font-mono font-bold text-white">92</span>
+                <span class="text-slate-400 text-xs">/ 100</span>
+              </div>
+            </div>
+
+            <div class="w-full bg-space-900 h-2.5 rounded-full overflow-hidden mt-4 border border-slate-700">
+              <div id="viability-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-300" style="width: 92%"></div>
+            </div>
+
+            <!-- Dynamic Alerts Box -->
+            <div id="sim-alert-box" class="mt-4 p-3 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-xs text-emerald-300">
+              <div class="flex items-center gap-1.5 font-bold">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i> All Environmental Parameters Within Tolerances
+              </div>
+              <p class="text-[11px] text-slate-300 mt-1">Biomass synthesis is running at peak photosynthetic efficiency.</p>
+            </div>
+          </div>
+
+          <!-- Production Outputs Grid -->
+          <div class="grid grid-cols-2 gap-4">
+            
+            <div class="p-4 bg-space-850 rounded-xl border border-slate-700">
+              <div class="flex items-center justify-between text-slate-400 text-xs">
+                <span>Caloric Output</span>
+                <i data-lucide="flame" class="w-4 h-4 text-amber-400"></i>
+              </div>
+              <div id="out-calories" class="text-2xl font-bold font-mono text-white mt-1">21,450</div>
+              <div class="text-[10px] text-slate-400 font-mono mt-0.5">kcal / sol <span id="out-crew-support" class="text-emerald-400 font-semibold">(Supports 7.1 crew)</span></div>
+            </div>
+
+            <div class="p-4 bg-space-850 rounded-xl border border-slate-700">
+              <div class="flex items-center justify-between text-slate-400 text-xs">
+                <span>Oâ‚‚ Generated</span>
+                <i data-lucide="wind" class="w-4 h-4 text-cyan-400"></i>
+              </div>
+              <div id="out-oxygen" class="text-2xl font-bold font-mono text-white mt-1">6.2 kg</div>
+              <div class="text-[10px] text-slate-400 font-mono mt-0.5">per sol (Crew needs 0.84 kg/ea)</div>
+            </div>
+
+            <div class="p-4 bg-space-850 rounded-xl border border-slate-700">
+              <div class="flex items-center justify-between text-slate-400 text-xs">
+                <span>Fresh Water Loss</span>
+                <i data-lucide="droplet" class="w-4 h-4 text-blue-400"></i>
+              </div>
+              <div id="out-water-loss" class="text-2xl font-bold font-mono text-white mt-1">1.8 L</div>
+              <div class="text-[10px] text-slate-400 font-mono mt-0.5">daily makeup required</div>
+            </div>
+
+            <div class="p-4 bg-space-850 rounded-xl border border-slate-700">
+              <div class="flex items-center justify-between text-slate-400 text-xs">
+                <span>Harvest Velocity</span>
+                <i data-lucide="clock" class="w-4 h-4 text-purple-400"></i>
+              </div>
+              <div id="out-harvest-rate" class="text-2xl font-bold font-mono text-white mt-1">1.28x</div>
+              <div class="text-[10px] text-slate-400 font-mono mt-0.5">relative to terrestrial baseline</div>
+            </div>
+
+          </div>
+
+          <!-- Presets -->
+          <div class="p-4 bg-space-900/90 rounded-xl border border-slate-800">
+            <div class="text-xs font-mono text-slate-400 mb-2">QUICK TEST PRESETS:</div>
+            <div class="flex flex-wrap gap-2">
+              <button onclick="applyPreset('ideal')" class="px-3 py-1.5 text-xs rounded-lg bg-space-800 hover:bg-space-700 text-emerald-400 border border-emerald-500/30 transition min-h-[36px] flex items-center">
+                âš¡ Optimal Production
+              </button>
+              <button onclick="applyPreset('dust_storm')" class="px-3 py-1.5 text-xs rounded-lg bg-space-800 hover:bg-space-700 text-yellow-400 border border-yellow-500/30 transition min-h-[36px] flex items-center">
+                ðŸŒªï¸ Global Dust Storm
+              </button>
+              <button onclick="applyPreset('hull_breach')" class="px-3 py-1.5 text-xs rounded-lg bg-space-800 hover:bg-space-700 text-red-400 border border-red-500/30 transition min-h-[36px] flex items-center">
+                âš ï¸ Depressurization Alarm
+              </button>
+              <button onclick="applyPreset('the_martian')" class="px-3 py-1.5 text-xs rounded-lg bg-space-800 hover:bg-space-700 text-mars-400 border border-mars-500/30 transition min-h-[36px] flex items-center">
+                ðŸ¥” "The Martian" Mark Watney
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Mars vs Earth Comparison Matrix -->
+  <section id="comparison" class="relative z-10 py-16 bg-space-900/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="text-xs font-mono text-cyan-400 tracking-wider uppercase mb-1">Comparative Agronomic Science</div>
+        <h2 class="text-3xl sm:text-4xl font-black text-white">Mars vs. Earth: Environmental Audit</h2>
+        <p class="text-slate-400 text-sm mt-2">
+          Direct side-by-side comparison of baseline biological drivers between Earth and Mars.
+        </p>
+      </div>
+
+      <!-- Mobile Horizontal Scroll Alert -->
+      <div class="sm:hidden flex items-center justify-center gap-1.5 text-[11px] font-mono text-cyan-400 bg-space-850/90 border border-cyan-500/30 py-2 px-3 rounded-lg mb-3">
+        <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i>
+        <span>Swipe table horizontally to inspect all columns</span>
+      </div>
+
+      <div class="overflow-x-auto rounded-xl border border-slate-800 shadow-xl">
+        <table class="w-full min-w-[620px] text-left border-collapse font-sans text-xs sm:text-sm bg-space-850">
+          <thead>
+            <tr class="bg-space-800/90 border-b border-slate-700 text-[11px] sm:text-xs font-mono uppercase text-slate-300">
+              <th class="p-3.5 sm:p-4">Agronomic Factor</th>
+              <th class="p-3.5 sm:p-4 text-emerald-400">Earth (Baseline)</th>
+              <th class="p-3.5 sm:p-4 text-mars-400">Mars (Surface Ambient)</th>
+              <th class="p-3.5 sm:p-4 text-cyan-400">ARES Controlled Biosphere</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800 text-xs sm:text-sm">
+            <tr>
+              <td class="p-4 font-bold text-white">Atmospheric Pressure</td>
+              <td class="p-4 text-slate-300">101.3 kPa (1.0 atm)</td>
+              <td class="p-4 text-red-400 font-mono">0.636 kPa (~0.006 atm)</td>
+              <td class="p-4 text-emerald-300 font-mono">35 to 55 kPa (Optimized Nâ‚‚/Oâ‚‚/COâ‚‚)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-bold text-white">COâ‚‚ Concentration</td>
+              <td class="p-4 text-slate-300">420 ppm (0.042%)</td>
+              <td class="p-4 text-mars-300 font-mono">95.3% (~950,000 ppm)</td>
+              <td class="p-4 text-emerald-300 font-mono">1,200 to 1,500 ppm (3x Earth photosynthesis)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-bold text-white">Solar Irradiance</td>
+              <td class="p-4 text-slate-300">1,361 W/mÂ² (TOA)</td>
+              <td class="p-4 text-amber-300 font-mono">590 W/mÂ² (43% terrestrial)</td>
+              <td class="p-4 text-emerald-300 font-mono">800â€“1,000 W/mÂ² equivalent LED spectrum</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-bold text-white">Day Length (Cycle)</td>
+              <td class="p-4 text-slate-300">24 hours 00 min</td>
+              <td class="p-4 text-slate-300 font-mono">24 hours 39 min (Sol)</td>
+              <td class="p-4 text-emerald-300 font-mono">Automated 18h ON / 6h OFF circadian LED</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-bold text-white">Gravity</td>
+              <td class="p-4 text-slate-300">1.0 g (9.81 m/sÂ²)</td>
+              <td class="p-4 text-purple-300 font-mono">0.38 g (3.72 m/sÂ²)</td>
+              <td class="p-4 text-purple-300 font-mono">0.38 g (roots guided by directional phototropism)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-bold text-white">Soil Chemistry</td>
+              <td class="p-4 text-slate-300">Organic humus, microbes, worms, N-P-K</td>
+              <td class="p-4 text-red-400 font-mono">Iron oxide basalt, 0.5â€“1% Perchlorates, zero N</td>
+              <td class="p-4 text-emerald-300 font-mono">Leached regolith + biochar + mycorrhizal fungi</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-bold text-white">Surface Temperature</td>
+              <td class="p-4 text-slate-300">+15Â°C mean global</td>
+              <td class="p-4 text-cyan-400 font-mono">-63Â°C mean (-140Â°C to +20Â°C)</td>
+              <td class="p-4 text-emerald-300 font-mono">+21Â°C to +24Â°C continuous climate regulation</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Detailed Scientific FAQ / Mythbusting -->
+  <section id="faq" class="relative z-10 py-16 bg-space-850/60 border-t border-slate-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-12">
+        <div class="text-xs font-mono text-mars-400 tracking-wider uppercase mb-1">Empirical Science vs Fiction</div>
+        <h2 class="text-3xl sm:text-4xl font-black text-white">Frequently Asked Questions</h2>
+        <p class="text-slate-400 text-sm mt-2">
+          Deconstructing the real bio-chemical reality of growing food on the Red Planet.
+        </p>
+      </div>
+
+      <div class="space-y-4" id="faq-accordion">
+        
+        <!-- Q1 -->
+        <div class="faq-item border border-slate-800 rounded-xl bg-space-850 overflow-hidden">
+          <button class="faq-btn w-full p-5 text-left font-bold text-white flex justify-between items-center gap-4 hover:text-mars-400 transition">
+            <span>Can we really grow potatoes in Martian regolith like in <em>The Martian</em>?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-4">
+            Andy Weir's novel and film popularized using Martian soil with human feces to grow potatoes. While the premise is broadly correct in principle, there are two crucial real-world caveats:
+            <br><br>
+            1. <strong>Perchlorates:</strong> In the real world, Phoenix and Curiosity landers discovered high concentrations of magnesium and calcium perchlorates (0.5â€“1%). Mark Watney's potatoes would have absorbed lethal amounts of toxic oxidizers, destroying thyroid function. The regolith must first undergo heavy water-rinsing or bacterial degradation using perchlorate-respiring strains (*Dechloromonas agitata*).
+            <br><br>
+            2. <strong>Pathogens:</strong> Raw human waste contains virulent pathogens and coliform bacteria that can infect the crop. True Martian farming protocols require high-temperature autoclave composting or supercritical water oxidation (SCWO) to sterilize waste before introducing it as biochar or fertilizer.
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="faq-item border border-slate-800 rounded-xl bg-space-850 overflow-hidden">
+          <button class="faq-btn w-full p-5 text-left font-bold text-white flex justify-between items-center gap-4 hover:text-mars-400 transition">
+            <span>How do plants know which way to grow in 0.38g partial gravity?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-4">
+            Experiments aboard the International Space Station (ISS Veggie and APH facilities) have revealed that plant gravity sensors (statolithsâ€”dense starch granules in root cap cells) can detect gravitational acceleration as low as <strong>0.1g</strong>. 
+            <br><br>
+            Since Mars possesses 0.38g (over triple the minimum detection threshold), root gravitropism functions adequately. Furthermore, plants rely strongly on <strong>positive phototropism</strong> (growing toward high-intensity LED light sources) and directional nutrient gradients (hydrotropism), allowing root and shoot architecture to develop naturally.
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="faq-item border border-slate-800 rounded-xl bg-space-850 overflow-hidden">
+          <button class="faq-btn w-full p-5 text-left font-bold text-white flex justify-between items-center gap-4 hover:text-mars-400 transition">
+            <span>Where will the water for agricultural greenhouses come from?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-4">
+            Mars is not dry; it has vast reservoirs of frozen water ice:
+            <ul class="list-disc list-inside mt-2 space-y-1 text-slate-300">
+              <li><strong>Subsurface Glacial Ice:</strong> Radar data from Mars Reconnaissance Orbiter (SHARAD) confirmed massive sheets of pure water ice meters beneath the surface in mid-latitudes (e.g., Utopia Planitia and Arcadia Planitia).</li>
+              <li><strong>Hydrated Minerals:</strong> Regolith contains clays (smectites) and sulfates that hold 1% to 3% water by mass, extractable via thermal baking at 400Â°C.</li>
+              <li><strong>Closed-Loop Condensation:</strong> In modern greenhouses, crops transpire nearly 98% of the water they take in. Dehumidifying coils extract this pristine evaporated water vapor with near 100% recycling efficiency.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="faq-item border border-slate-800 rounded-xl bg-space-850 overflow-hidden">
+          <button class="faq-btn w-full p-5 text-left font-bold text-white flex justify-between items-center gap-4 hover:text-mars-400 transition">
+            <span>Why not just import dried ration packs from Earth instead of farming?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-4">
+            For initial 30-day sorties, dehydrated MREs suffice. But for a permanent or multi-year presence, supply-chain logistics collapse:
+            <ul class="list-disc list-inside mt-2 space-y-1 text-slate-300">
+              <li><strong>Payload Cost:</strong> Shipping payload to the Martian surface costs between $50,000 to $200,000 per kilogram. A crew of 6 consumes over 4,000 kg of food annually.</li>
+              <li><strong>Nutrient Degradation:</strong> Essential micronutrientsâ€”such as Vitamin C, Vitamin B1 (thiamine), and Vitamin Kâ€”spontaneously degrade in storage packs over 18 to 24 months, causing severe health hazards.</li>
+              <li><strong>Psychological Vitality:</strong> Long-duration spaceflight studies demonstrate that tending live greenery and eating crisp, fresh produce is one of the most effective safeguards against astronaut depression and mission burnout.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Modal for Detailed Crop Spec Sheet (Responsive Mobile Drawer / Desktop Center Dialog) -->
+  <div id="crop-modal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-space-850 border border-slate-700 w-full max-w-2xl rounded-t-2xl sm:rounded-2xl p-5 sm:p-8 shadow-2xl relative max-h-[88vh] sm:max-h-[90vh] overflow-y-auto">
+      <button id="close-modal-btn" class="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 p-2 text-slate-400 hover:text-white rounded-lg hover:bg-space-800 transition" aria-label="Close Crop Modal">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div id="modal-content" class="space-y-4 pt-1 sm:pt-0">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="relative z-10 border-t border-slate-800 bg-space-950 py-12 text-slate-400 font-mono text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded bg-mars-500 flex items-center justify-center text-white">
+          <i data-lucide="sprout" class="w-4 h-4"></i>
+        </div>
+        <span class="text-white font-bold tracking-wider">ARES-AGRI INITIATIVE</span>
+        <span class="text-slate-600">|</span>
+        <span>AEROSPACE LIFE SUPPORT DIVISION</span>
+      </div>
+
+      <div class="text-slate-500 text-center sm:text-right">
+        Scientific references: NASA Ames Research Center, ESA MELiSSA Project & Wageningen University Mars Regolith Trials.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+/**
+ * particles.js - Mars & Plant Interactive Living Canvas
+ * Combines Martian landscape & red dust with bioluminescent plant spores,
+ * mycelial filament networks, glowing greenhouse biodomes, and twinkling stars.
+ */
+
+(function() {
+  const canvas = document.getElementById('mars-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  let width, height;
+  let dustParticles = [];
+  let plantSpores = [];
+  let stars = [];
+  
+  let mouse = { x: -1000, y: -1000, radius: 120 };
+
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  window.addEventListener('mouseout', () => {
+    mouse.x = -1000;
+    mouse.y = -1000;
+  });
+
+  // Mobile & Tablet Touch Support
+  window.addEventListener('touchstart', (e) => {
+    if (e.touches && e.touches.length > 0) {
+      mouse.x = e.touches[0].clientX;
+      mouse.y = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if (e.touches && e.touches.length > 0) {
+      mouse.x = e.touches[0].clientX;
+      mouse.y = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchend', () => {
+    mouse.x = -1000;
+    mouse.y = -1000;
+  });
+
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    mouse.radius = width < 768 ? 90 : 130;
+    initParticles();
+  }
+
+  window.addEventListener('resize', resize);
+
+  // Initialize stars and particles with screen-size adaptation
+  function initParticles() {
+    const isMobile = width < 768;
+    const isTablet = width >= 768 && width < 1024;
+    
+    const starCount = isMobile ? 35 : (isTablet ? 55 : 80);
+    const dustCount = isMobile ? 22 : (isTablet ? 32 : 45);
+    const sporeCount = isMobile ? 25 : (isTablet ? 38 : 50);
+
+    stars = [];
+    for (let i = 0; i < starCount; i++) {
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * (height * 0.75),
+        radius: Math.random() * 1.2 + 0.3,
+        alpha: Math.random() * 0.7 + 0.2,
+        twinkleSpeed: Math.random() * 0.02 + 0.005,
+        twinkleOffset: Math.random() * Math.PI * 2
+      });
+    }
+
+    dustParticles = [];
+    for (let i = 0; i < dustCount; i++) {
+      dustParticles.push(new DustParticle());
+    }
+
+    plantSpores = [];
+    for (let i = 0; i < sporeCount; i++) {
+      plantSpores.push(new PlantSpore());
+    }
+  }
+
+  /* Martian Red Dust Particle */
+  class DustParticle {
+    constructor() {
+      this.reset(true);
+    }
+
+    reset(initial = false) {
+      this.x = initial ? Math.random() * width : -20;
+      this.y = Math.random() * height;
+      this.size = Math.random() * 2.2 + 0.6;
+      this.speedX = Math.random() * 0.8 + 0.3;
+      this.speedY = (Math.random() - 0.45) * 0.35;
+      this.alpha = Math.random() * 0.45 + 0.15;
+      // Martian ferric rust & copper hues
+      const hues = [12, 18, 25, 32];
+      this.hue = hues[Math.floor(Math.random() * hues.length)];
+    }
+
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY + Math.sin(this.x * 0.004) * 0.25;
+
+      // Mouse repulsion
+      const dx = this.x - mouse.x;
+      const dy = this.y - mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < mouse.radius) {
+        const force = (mouse.radius - dist) / mouse.radius;
+        this.x += (dx / dist) * force * 3;
+        this.y += (dy / dist) * force * 3;
+      }
+
+      if (this.x > width + 20 || this.y < -20 || this.y > height + 20) {
+        this.reset();
+      }
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${this.hue}, 90%, 55%, ${this.alpha})`;
+      ctx.shadowBlur = this.size * 3;
+      ctx.shadowColor = `hsla(${this.hue}, 90%, 50%, 0.8)`;
+      ctx.fill();
+    }
+  }
+
+  /* Bioluminescent Plant Spore & Seed */
+  class PlantSpore {
+    constructor() {
+      this.reset(true);
+    }
+
+    reset(initial = false) {
+      this.x = Math.random() * width;
+      this.y = initial ? Math.random() * height : height + 20;
+      this.size = Math.random() * 2.8 + 1.2;
+      this.speedY = -(Math.random() * 0.5 + 0.25); // Float upwards like botanical spores
+      this.speedX = (Math.random() - 0.5) * 0.4;
+      this.baseAlpha = Math.random() * 0.5 + 0.3;
+      this.pulseSpeed = Math.random() * 0.04 + 0.015;
+      this.pulsePhase = Math.random() * Math.PI * 2;
+      // Botanical bio-luminescent shades: Emerald, Mint, Lime, Chlorophyll-green
+      const hues = [142, 155, 168, 120];
+      this.hue = hues[Math.floor(Math.random() * hues.length)];
+      this.isLeaf = Math.random() > 0.7; // Some render as micro-foliage / leaf shapes
+    }
+
+    update() {
+      this.pulsePhase += this.pulseSpeed;
+      this.y += this.speedY;
+      this.x += this.speedX + Math.sin(this.pulsePhase) * 0.35;
+
+      // Mouse repulsion
+      const dx = this.x - mouse.x;
+      const dy = this.y - mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < mouse.radius) {
+        const force = (mouse.radius - dist) / mouse.radius;
+        this.x += (dx / dist) * force * 4;
+        this.y += (dy / dist) * force * 4;
+      }
+
+      if (this.y < -20 || this.x < -20 || this.x > width + 20) {
+        this.reset();
+      }
+    }
+
+    draw() {
+      const alpha = this.baseAlpha + Math.sin(this.pulsePhase) * 0.2;
+      ctx.save();
+      ctx.translate(this.x, this.y);
+
+      if (this.isLeaf) {
+        // Draw tiny botanical leaf/seed silhouette
+        ctx.rotate(Math.sin(this.pulsePhase) * 0.5);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, this.size * 1.6, this.size * 0.8, Math.PI / 4, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${this.hue}, 85%, 55%, ${alpha})`;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = `hsla(${this.hue}, 95%, 50%, 0.9)`;
+        ctx.fill();
+      } else {
+        // Glowing circular spore
+        ctx.beginPath();
+        ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${this.hue}, 90%, 65%, ${alpha})`;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = `hsla(${this.hue}, 95%, 45%, 0.85)`;
+        ctx.fill();
+
+        // Inner glowing core
+        ctx.beginPath();
+        ctx.arc(0, 0, this.size * 0.45, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${alpha + 0.2})`;
+        ctx.fill();
+      }
+
+      ctx.restore();
+    }
+  }
+
+  // Draw Mycelial / Bio-Filament connections between close plant spores
+  function drawMycelialConnections() {
+    ctx.save();
+    for (let i = 0; i < plantSpores.length; i++) {
+      for (let j = i + 1; j < plantSpores.length; j++) {
+        const dx = plantSpores[i].x - plantSpores[j].x;
+        const dy = plantSpores[i].y - plantSpores[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 85) {
+          const alpha = (1 - dist / 85) * 0.22;
+          ctx.beginPath();
+          ctx.moveTo(plantSpores[i].x, plantSpores[i].y);
+          ctx.lineTo(plantSpores[j].x, plantSpores[j].y);
+          ctx.strokeStyle = `rgba(34, 197, 94, ${alpha})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+    }
+    ctx.restore();
+  }
+
+  // Draw twinkling stars in deep space
+  function drawStars(time) {
+    ctx.save();
+    for (let i = 0; i < stars.length; i++) {
+      const s = stars[i];
+      const alpha = s.alpha + Math.sin(time * s.twinkleSpeed + s.twinkleOffset) * 0.25;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 235, 225, ${Math.max(0.1, alpha)})`;
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  // Populate particles based on screen size
+  resize();
+
+  let animationFrameId;
+  let time = 0;
+
+  function animate() {
+    time += 0.05;
+    ctx.clearRect(0, 0, width, height);
+
+    // 1. Dynamic Twinkling Stars
+    drawStars(time);
+
+    // 2. Martian Red Dust motes
+    for (let i = 0; i < dustParticles.length; i++) {
+      dustParticles[i].update();
+      dustParticles[i].draw();
+    }
+
+    // 3. Mycelial filaments connecting bio-spores
+    drawMycelialConnections();
+
+    // 4. Bioluminescent Plant Spores & Foliage rising from Bio-Domes
+    for (let i = 0; i < plantSpores.length; i++) {
+      plantSpores[i].update();
+      plantSpores[i].draw();
+    }
+
+    animationFrameId = requestAnimationFrame(animate);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      cancelAnimationFrame(animationFrameId);
+    } else {
+      animate();
+    }
+  });
+
+  animate();
+})();
+
+</script>
+  <script>
+/**
+ * app.js - ARES-AGRI Martian Biosphere Application Logic
+ * Powers the interactive simulator, crop database filtering, modals,
+ * habitat ambient audio synthesizer, Sol clock, and FAQ accordion.
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Lucide Icons
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+
+  initMobileMenu();
+  initSolClock();
+  initCropDatabase();
+  initSimulator();
+  initFaqAccordion();
+  initAmbientAudio();
+});
+
+/* ==========================================================================
+   0. Mobile & Tablet Responsive Navigation Drawer
+   ========================================================================== */
+function initMobileMenu() {
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  const navLinks = document.querySelectorAll('.mobile-nav-link');
+
+  if (!menuBtn || !mobileMenu) return;
+
+  menuBtn.addEventListener('click', () => {
+    const isClosed = mobileMenu.classList.contains('hidden');
+    if (isClosed) {
+      mobileMenu.classList.remove('hidden');
+      if (menuIcon) {
+        menuIcon.setAttribute('data-lucide', 'x');
+      }
+    } else {
+      mobileMenu.classList.add('hidden');
+      if (menuIcon) {
+        menuIcon.setAttribute('data-lucide', 'menu');
+      }
+    }
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      if (menuIcon) {
+        menuIcon.setAttribute('data-lucide', 'menu');
+        if (window.lucide) {
+          lucide.createIcons();
+        }
+      }
+    });
+  });
+}
+
+/* ==========================================================================
+   1. Martian Sol Clock & Coordinated Mars Time (MTC)
+   ========================================================================== */
+function initSolClock() {
+  const solElement = document.getElementById('martian-sol');
+  const timeElement = document.getElementById('martian-time');
+
+  let baseSol = 142;
+  let baseSeconds = 14 * 3600 + 32 * 60 + 8;
+
+  setInterval(() => {
+    baseSeconds++;
+    const hours = Math.floor(baseSeconds / 3600) % 24;
+    const minutes = Math.floor((baseSeconds % 3600) / 60);
+    const seconds = baseSeconds % 60;
+
+    const pad = (n) => String(n).padStart(2, '0');
+    if (timeElement) {
+      timeElement.textContent = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    }
+  }, 1000);
+}
+
+/* ==========================================================================
+   2. Martian Crop Catalog & Filtering System
+   ========================================================================== */
+const CROP_DATA = [
+  {
+    id: 'potato',
+    commonName: 'Martian Russet Potato',
+    scientificName: 'Solanum tuberosum cv. Tacna',
+    emoji: 'ðŸ¥”',
+    category: ['calories', 'regolith'],
+    cycle: '90 Sols',
+    yieldKgM2: '14.2 kg/mÂ²',
+    caloricDensity: '770 kcal/kg',
+    proteinContent: '2.0%',
+    waterNeed: 'Medium (Buffered)',
+    optimalMedium: 'Leached Regolith + Biochar',
+    radiationTolerance: 'Moderate (DNA repair proficient)',
+    description: 'High caloric output and potassium. Tubers grow beneath regolith, naturally shielding edible mass from radiation flares.',
+    astronautMorale: 'High (versatile cooking, comfort food)',
+    challenges: 'Requires de-perchlorated substrate and careful fungicide control.'
+  },
+  {
+    id: 'sweet-potato',
+    commonName: 'Deep-Space Sweet Potato',
+    scientificName: 'Ipomoea batatas',
+    emoji: 'ðŸ ',
+    category: ['calories', 'regolith'],
+    cycle: '105 Sols',
+    yieldKgM2: '18.5 kg/mÂ²',
+    caloricDensity: '860 kcal/kg',
+    proteinContent: '1.6%',
+    waterNeed: 'Low to Medium',
+    optimalMedium: 'Regolith / Hydroponics',
+    radiationTolerance: 'High (anthocyanin & carotenoid rich)',
+    description: '100% edible biomass: sweet nutrient-rich storage roots paired with tender, iron-dense leaves suitable for daily salads.',
+    astronautMorale: 'Very High (naturally sweet, prevents palette fatigue)',
+    challenges: 'Requires significant vertical vine trellising.'
+  },
+  {
+    id: 'duckweed',
+    commonName: 'Fast-Growth Duckweed',
+    scientificName: 'Lemna minor',
+    emoji: 'ðŸŒ¿',
+    category: ['protein', 'fast'],
+    cycle: '2 Sols (Doubles)',
+    yieldKgM2: '28.0 kg/mÂ²',
+    caloricDensity: '450 kcal/kg',
+    proteinContent: '40.0% (Dry Weight)',
+    waterNeed: 'Recirculated Shallow Basin',
+    optimalMedium: 'Aquatic Lagoon / Graywater',
+    radiationTolerance: 'High',
+    description: 'Fastest-growing angiosperm known. Absorbs excess nitrogen and phosphorus directly from habitat graywater, doubling mass every 48 hours.',
+    astronautMorale: 'Moderate (ground into nutrient shakes/pastes)',
+    challenges: 'High moisture removal required before storage.'
+  },
+  {
+    id: 'spirulina',
+    commonName: 'Arthrospira Photobioreactor',
+    scientificName: 'Arthrospira platensis',
+    emoji: 'ðŸ§«',
+    category: ['protein', 'fast'],
+    cycle: '1 Sol (Continuous)',
+    yieldKgM2: '35.0 kg/mÂ²',
+    caloricDensity: '2,900 kcal/kg (Dry)',
+    proteinContent: '65.0% Complete Protein',
+    waterNeed: 'Closed Tube Recirculation',
+    optimalMedium: 'Photobioreactor Tubes',
+    radiationTolerance: 'Extreme (superoxide dismutase rich)',
+    description: 'Single-celled cyanobacteria converting Mars COâ‚‚ into breathable Oâ‚‚ with 90% photon efficiency while providing complete essential amino acids.',
+    astronautMorale: 'Neutral to Low (flavor requires masking with seasoning)',
+    challenges: 'Centrifugal harvest and freeze-drying infrastructure.'
+  },
+  {
+    id: 'radish',
+    commonName: 'Quick-Cycle Cherry Radish',
+    scientificName: 'Raphanus sativus',
+    emoji: 'ðŸŒ±',
+    category: ['fast', 'regolith'],
+    cycle: '21 Sols',
+    yieldKgM2: '6.8 kg/mÂ²',
+    caloricDensity: '160 kcal/kg',
+    proteinContent: '0.7%',
+    waterNeed: 'Low',
+    optimalMedium: 'Aeroponics / Regolith Trays',
+    radiationTolerance: 'Moderate',
+    description: 'Ultra-fast maturity cycle. Ideal for rapid crop rotation between primary staples, replenishing vitamin C and fresh dietary crunch.',
+    astronautMorale: 'High (sharp peppery flavor stimulates appetite)',
+    challenges: 'Low total caloric yield; strictly a micronutrient supplement.'
+  },
+  {
+    id: 'soybean',
+    commonName: 'Nitrogen-Fixing Soybean',
+    scientificName: 'Glycine max',
+    emoji: 'ðŸ«˜',
+    category: ['protein', 'calories'],
+    cycle: '80 Sols',
+    yieldKgM2: '8.4 kg/mÂ²',
+    caloricDensity: '1,470 kcal/kg',
+    proteinContent: '36.5%',
+    waterNeed: 'Medium',
+    optimalMedium: 'Rhizobium-Inoculated Regolith',
+    radiationTolerance: 'Moderate',
+    description: 'Forms symbiotic root nodules with Bradyrhizobium bacteria to fix atmospheric nitrogen. Essential source of plant lipids, oils, and complete proteins.',
+    astronautMorale: 'High (produces soymilk, tofu, edamame)',
+    challenges: 'Sensitive to elevated boron and perchlorate trace impurities.'
+  },
+  {
+    id: 'dwarf-wheat',
+    commonName: 'Apogee Super-Dwarf Wheat',
+    scientificName: 'Triticum aestivum cv. Apogee',
+    emoji: 'ðŸŒ¾',
+    category: ['calories'],
+    cycle: '62 Sols',
+    yieldKgM2: '16.0 kg/mÂ²',
+    caloricDensity: '3,390 kcal/kg (Grain)',
+    proteinContent: '14.0%',
+    waterNeed: 'High (Nutrient Solution)',
+    optimalMedium: 'Continuous Hydroponic Flow',
+    radiationTolerance: 'Moderate',
+    description: 'Genetically bred by NASA to reach only 20 cm in height with zero lodging risk, packing dense seed heads under continuous 24-hour photoperiods.',
+    astronautMorale: 'Extreme (enables fresh bread baking in habitat)',
+    challenges: 'High chaff-to-grain post-harvest milling processing.'
+  },
+  {
+    id: 'strawberry',
+    commonName: 'Alpine Fragaria Strawberry',
+    scientificName: 'Fragaria Ã— ananassa',
+    emoji: 'ðŸ“',
+    category: ['fast'],
+    cycle: '50 Sols',
+    yieldKgM2: '5.2 kg/mÂ²',
+    caloricDensity: '320 kcal/kg',
+    proteinContent: '0.8%',
+    waterNeed: 'Medium (Aeroponics)',
+    optimalMedium: 'Vertical Aeroponic Towers',
+    radiationTolerance: 'Moderate',
+    description: 'Grown in vertical rotating columns. Beyond vitamin C and polyphenols, fresh berries offer massive psychological benefits for isolation stress.',
+    astronautMorale: 'Maximum (critical psychological lifeline for crew)',
+    challenges: 'Requires mechanical acoustic or soft brush pollination.'
+  }
+];
+
+function initCropDatabase() {
+  const grid = document.getElementById('crops-grid');
+  const filterBtns = document.querySelectorAll('.crop-filter-btn');
+
+  function renderCrops(filter = 'all') {
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    const filtered = filter === 'all' 
+      ? CROP_DATA 
+      : CROP_DATA.filter(crop => crop.category.includes(filter));
+
+    filtered.forEach(crop => {
+      const card = document.createElement('div');
+      card.className = 'bg-space-850 border border-slate-800/80 hover:border-emerald-500/50 card-hover-bio rounded-xl p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/40 group cursor-pointer relative overflow-hidden';
+      
+      card.innerHTML = `
+        <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-emerald-500/5 to-mars-500/5 rounded-bl-full pointer-events-none"></div>
+        <div>
+          <div class="flex items-start justify-between">
+            <span class="text-3xl p-2 rounded-lg bg-space-900 border border-slate-800 shadow-inner">${crop.emoji}</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-space-800/90 text-emerald-400 border border-emerald-500/30">${crop.cycle}</span>
+          </div>
+          
+          <h4 class="text-base font-bold text-white mt-3 group-hover:text-emerald-400 transition">${crop.commonName}</h4>
+          <p class="text-[11px] font-mono text-slate-400 italic">${crop.scientificName}</p>
+          
+          <p class="text-xs text-slate-300 mt-2.5 line-clamp-2">${crop.description}</p>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-slate-800/80 space-y-1.5 text-[11px] font-mono">
+          <div class="flex justify-between">
+            <span class="text-slate-400">Yield Index:</span>
+            <span class="text-emerald-400 font-bold">${crop.yieldKgM2}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">Caloric Density:</span>
+            <span class="text-amber-400 font-bold">${crop.caloricDensity}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">Protein:</span>
+            <span class="text-purple-400 font-bold">${crop.proteinContent}</span>
+          </div>
+          <button class="w-full mt-3 py-1.5 rounded bg-space-800 hover:bg-gradient-to-r hover:from-mars-600 hover:to-emerald-600 text-slate-200 hover:text-white font-sans text-xs font-semibold transition border border-slate-700 hover:border-emerald-400">
+            View Full Spec Sheet
+          </button>
+        </div>
+      `;
+
+      card.addEventListener('click', () => openCropModal(crop));
+      grid.appendChild(card);
+    });
+
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => {
+        b.classList.remove('active', 'bg-mars-500', 'text-white');
+        b.classList.add('bg-space-800', 'text-slate-300');
+      });
+      btn.classList.add('active', 'bg-mars-500', 'text-white');
+      btn.classList.remove('bg-space-800', 'text-slate-300');
+
+      renderCrops(btn.getAttribute('data-filter'));
+    });
+  });
+
+  renderCrops('all');
+}
+
+/* Modal for Detailed Crop Spec Sheet */
+function openCropModal(crop) {
+  const modal = document.getElementById('crop-modal');
+  const modalContent = document.getElementById('modal-content');
+  if (!modal || !modalContent) return;
+
+  modalContent.innerHTML = `
+    <div class="flex items-center gap-3 border-b border-slate-800 pb-4">
+      <span class="text-4xl p-2.5 rounded-xl bg-space-900 border border-slate-700">${crop.emoji}</span>
+      <div>
+        <h3 class="text-xl font-bold text-white">${crop.commonName}</h3>
+        <p class="text-xs font-mono text-mars-400 italic">${crop.scientificName}</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2 text-xs font-mono">
+      <div class="bg-space-900 p-3 rounded-lg border border-slate-800">
+        <span class="text-slate-400">GROWTH CYCLE:</span>
+        <div class="text-emerald-400 font-bold text-sm">${crop.cycle}</div>
+      </div>
+      <div class="bg-space-900 p-3 rounded-lg border border-slate-800">
+        <span class="text-slate-400">ESTIMATED YIELD:</span>
+        <div class="text-emerald-400 font-bold text-sm">${crop.yieldKgM2}</div>
+      </div>
+      <div class="bg-space-900 p-3 rounded-lg border border-slate-800">
+        <span class="text-slate-400">CALORIC VALUE:</span>
+        <div class="text-amber-400 font-bold text-sm">${crop.caloricDensity}</div>
+      </div>
+      <div class="bg-space-900 p-3 rounded-lg border border-slate-800">
+        <span class="text-slate-400">PROTEIN CONTENT:</span>
+        <div class="text-purple-400 font-bold text-sm">${crop.proteinContent}</div>
+      </div>
+    </div>
+
+    <div class="space-y-3 text-xs">
+      <div class="p-3 bg-space-900 rounded-lg border border-slate-800">
+        <strong class="text-slate-300 font-mono block mb-1">OPTIMAL CULTIVATION SUBSTRATE</strong>
+        <p class="text-slate-400 leading-relaxed">${crop.optimalMedium}</p>
+      </div>
+
+      <div class="p-3 bg-space-900 rounded-lg border border-slate-800">
+        <strong class="text-slate-300 font-mono block mb-1">RADIATION & ENVIRONMENT TOLERANCE</strong>
+        <p class="text-slate-400 leading-relaxed">${crop.radiationTolerance}</p>
+      </div>
+
+      <div class="p-3 bg-space-900 rounded-lg border border-slate-800">
+        <strong class="text-slate-300 font-mono block mb-1">PSYCHOLOGICAL MORALE FACTOR</strong>
+        <p class="text-slate-400 leading-relaxed">${crop.astronautMorale}</p>
+      </div>
+
+      <div class="p-3 bg-red-950/30 rounded-lg border border-red-900/50">
+        <strong class="text-red-400 font-mono block mb-1">OPERATIONAL CHALLENGES & RISK MITIGATION</strong>
+        <p class="text-slate-400 leading-relaxed">${crop.challenges}</p>
+      </div>
+    </div>
+  `;
+
+  modal.classList.remove('opacity-0', 'pointer-events-none');
+  modal.classList.add('opacity-100', 'pointer-events-auto');
+
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+}
+
+// Close Modal Handler (Click close button or tap outside backdrop)
+document.addEventListener('click', (e) => {
+  const modal = document.getElementById('crop-modal');
+  const closeBtn = document.getElementById('close-modal-btn');
+  if (modal && (e.target === modal || (closeBtn && closeBtn.contains(e.target)))) {
+    modal.classList.add('opacity-0', 'pointer-events-none');
+    modal.classList.remove('opacity-100', 'pointer-events-auto');
+  }
+});
+
+// ESC key to close modal on laptop/desktop
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const modal = document.getElementById('crop-modal');
+    if (modal) {
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modal.classList.remove('opacity-100', 'pointer-events-auto');
+    }
+  }
+});
+
+/* ==========================================================================
+   3. Interactive Martian Greenhouse Simulator
+   ========================================================================== */
+function initSimulator() {
+  const pressureInput = document.getElementById('param-pressure');
+  const co2Input = document.getElementById('param-co2');
+  const photoperiodInput = document.getElementById('param-photoperiod');
+  const waterLoopInput = document.getElementById('param-water-loop');
+  const tempInput = document.getElementById('param-temp');
+  const mediumSelect = document.getElementById('param-medium');
+
+  const valPressure = document.getElementById('val-pressure');
+  const valCo2 = document.getElementById('val-co2');
+  const valPhotoperiod = document.getElementById('val-photoperiod');
+  const valWaterLoop = document.getElementById('val-water-loop');
+  const valTemp = document.getElementById('val-temp');
+
+  const viabilityScore = document.getElementById('viability-score');
+  const viabilityRating = document.getElementById('viability-rating');
+  const viabilityBar = document.getElementById('viability-progress-bar');
+  const statusCard = document.getElementById('status-card');
+  const alertBox = document.getElementById('sim-alert-box');
+
+  const outCalories = document.getElementById('out-calories');
+  const outCrewSupport = document.getElementById('out-crew-support');
+  const outOxygen = document.getElementById('out-oxygen');
+  const outWaterLoss = document.getElementById('out-water-loss');
+  const outHarvestRate = document.getElementById('out-harvest-rate');
+
+  function calculateSimulation() {
+    if (!pressureInput) return;
+
+    const pressure = parseFloat(pressureInput.value); // 5 to 101 kPa
+    const co2 = parseFloat(co2Input.value);           // 300 to 3000 ppm
+    const hours = parseFloat(photoperiodInput.value); // 6 to 24 hrs
+    const waterLoop = parseFloat(waterLoopInput.value); // 70 to 99 %
+    const temp = parseFloat(tempInput.value);         // 5 to 35 Â°C
+    const medium = mediumSelect.value;
+
+    // Display Current Values
+    valPressure.textContent = `${pressure} kPa`;
+    valCo2.textContent = `${co2.toLocaleString()} ppm`;
+    valPhotoperiod.textContent = `${hours} hrs/sol`;
+    valWaterLoop.textContent = `${waterLoop}%`;
+    valTemp.textContent = `${temp}Â°C`;
+
+    let score = 100;
+    let alerts = [];
+    let isFatal = false;
+
+    // 1. Pressure Impact
+    if (pressure < 15) {
+      score -= 70;
+      isFatal = true;
+      alerts.push({
+        type: 'critical',
+        text: 'EXTREME HYPOBARIC COLLAPSE: Internal cell turgor pressure lost; tissue boiling/rupture occurs below 15 kPa.'
+      });
+    } else if (pressure < 30) {
+      score -= 25;
+      alerts.push({
+        type: 'warn',
+        text: 'Sub-optimal Pressure: Stomatal conductance impaired; transpiration restricted.'
+      });
+    }
+
+    // 2. Medium Impact
+    if (medium === 'raw-regolith') {
+      score -= 50;
+      isFatal = true;
+      alerts.push({
+        type: 'critical',
+        text: 'PERCHLORATE TOXICITY: High perchlorate salts actively poisoning root apical meristems!'
+      });
+    } else if (medium === 'aeroponics') {
+      score += 5;
+    }
+
+    // 3. CO2 Impact
+    if (co2 < 400) {
+      score -= 20;
+      alerts.push({ type: 'warn', text: 'Carbon Starvation: Photosynthesis rate severely curtailed.' });
+    } else if (co2 > 2400) {
+      score -= 15;
+      alerts.push({ type: 'warn', text: 'Hypercapnic Stress: Excessive CO2 causes stomatal closure and enzyme inhibition.' });
+    } else if (co2 >= 1000 && co2 <= 1600) {
+      score += 5; // Sweet spot
+    }
+
+    // 4. Photoperiod Impact
+    if (hours < 10) {
+      score -= 25;
+      alerts.push({ type: 'warn', text: 'Light Deficit: Etiolation detected; biomass accumulation too low.' });
+    }
+
+    // 5. Temperature Impact
+    if (temp < 12) {
+      score -= 30;
+      alerts.push({ type: 'warn', text: 'Thermal Freeze Risk: Enzymatic stalling and sluggish root nutrient absorption.' });
+    } else if (temp > 30) {
+      score -= 25;
+      alerts.push({ type: 'warn', text: 'Thermal Heat Stress: High respiration burns off carbohydrates faster than photosynthesized.' });
+    }
+
+    // 6. Water Recycling Impact
+    if (waterLoop < 85) {
+      score -= 20;
+      alerts.push({ type: 'warn', text: 'Water Loop Deficit: Habitat water ice reserves rapidly depleting.' });
+    }
+
+    // Bound score
+    score = Math.max(0, Math.min(100, score));
+
+    // Calculate outputs
+    const efficiencyFactor = (score / 100);
+    const lightFactor = (hours / 18);
+    const co2Multiplier = Math.min(1.4, Math.max(0.4, (co2 / 1200) * 1.0));
+    
+    let baseCalories = isFatal ? 0 : Math.round(23000 * efficiencyFactor * lightFactor * (co2Multiplier * 0.9));
+    let baseOxygen = isFatal ? 0 : ((6.8 * efficiencyFactor * lightFactor * (co2Multiplier * 0.95))).toFixed(1);
+    let waterLoss = (150 * (1 - (waterLoop / 100)) * (hours / 18)).toFixed(1);
+    let harvestRate = isFatal ? '0.00x' : (1.35 * efficiencyFactor * (co2Multiplier * 0.85)).toFixed(2) + 'x';
+
+    const crewSupported = (baseCalories / 3000).toFixed(1);
+
+    // Update Telemetry Display
+    viabilityScore.textContent = score;
+    viabilityBar.style.width = `${score}%`;
+    outCalories.textContent = baseCalories.toLocaleString();
+    outCrewSupport.textContent = `(Supports ${crewSupported} crew)`;
+    outOxygen.textContent = `${baseOxygen} kg`;
+    outWaterLoss.textContent = `${waterLoss} L`;
+    outHarvestRate.textContent = harvestRate;
+
+    // Rating Label & Colors
+    if (score >= 85) {
+      viabilityRating.textContent = 'OPTIMAL';
+      viabilityRating.className = 'text-3xl sm:text-4xl font-black text-emerald-400';
+      viabilityBar.className = 'h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-300';
+      statusCard.className = 'p-6 rounded-2xl bg-space-850 border border-emerald-500/40 shadow-2xl relative overflow-hidden';
+    } else if (score >= 60) {
+      viabilityRating.textContent = 'NOMINAL';
+      viabilityRating.className = 'text-3xl sm:text-4xl font-black text-amber-400';
+      viabilityBar.className = 'h-full bg-gradient-to-r from-yellow-500 to-amber-400 transition-all duration-300';
+      statusCard.className = 'p-6 rounded-2xl bg-space-850 border border-amber-500/40 shadow-2xl relative overflow-hidden';
+    } else if (score >= 30) {
+      viabilityRating.textContent = 'STRESSED';
+      viabilityRating.className = 'text-3xl sm:text-4xl font-black text-orange-400';
+      viabilityBar.className = 'h-full bg-gradient-to-r from-orange-500 to-red-400 transition-all duration-300';
+      statusCard.className = 'p-6 rounded-2xl bg-space-850 border border-orange-500/40 shadow-2xl relative overflow-hidden';
+    } else {
+      viabilityRating.textContent = 'LETHAL FAILURE';
+      viabilityRating.className = 'text-3xl sm:text-4xl font-black text-red-500 animate-pulse';
+      viabilityBar.className = 'h-full bg-red-600 transition-all duration-300';
+      statusCard.className = 'p-6 rounded-2xl bg-space-850 border border-red-500/60 shadow-2xl relative overflow-hidden';
+    }
+
+    // Render Alerts
+    if (alerts.length === 0) {
+      alertBox.className = 'mt-4 p-3 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-xs text-emerald-300';
+      alertBox.innerHTML = `
+        <div class="flex items-center gap-1.5 font-bold">
+          <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i> All Environmental Parameters Within Tolerances
+        </div>
+        <p class="text-[11px] text-slate-300 mt-1">Biomass synthesis is running at peak photosynthetic efficiency.</p>
+      `;
+    } else {
+      const topAlert = alerts[0];
+      const isCritical = topAlert.type === 'critical';
+      alertBox.className = `mt-4 p-3 rounded-lg ${isCritical ? 'bg-red-950/60 border border-red-500/50 text-red-300' : 'bg-amber-950/50 border border-amber-500/40 text-amber-300'} text-xs`;
+      alertBox.innerHTML = `
+        <div class="flex items-center gap-1.5 font-bold">
+          <i data-lucide="${isCritical ? 'alert-triangle' : 'alert-circle'}" class="w-4 h-4 ${isCritical ? 'text-red-400' : 'text-amber-400'}"></i> 
+          ${isCritical ? 'CRITICAL ENVIRONMENTAL ALERT' : 'ENVIRONMENTAL WARNING'}
+        </div>
+        <p class="text-[11px] text-slate-200 mt-1">${topAlert.text}</p>
+        ${alerts.length > 1 ? `<div class="text-[10px] text-slate-400 mt-1 font-mono">+${alerts.length - 1} additional warnings</div>` : ''}
+      `;
+    }
+
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  }
+
+  // Attach event listeners
+  [pressureInput, co2Input, photoperiodInput, waterLoopInput, tempInput, mediumSelect].forEach(elem => {
+    if (elem) elem.addEventListener('input', calculateSimulation);
+  });
+
+  // Reset Button
+  const resetBtn = document.getElementById('reset-sim-btn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      applyPreset('ideal');
+    });
+  }
+
+  // Preset Applicator
+  window.applyPreset = function(presetName) {
+    if (!pressureInput) return;
+
+    if (presetName === 'ideal') {
+      pressureInput.value = 50;
+      co2Input.value = 1200;
+      photoperiodInput.value = 18;
+      waterLoopInput.value = 96;
+      tempInput.value = 22;
+      mediumSelect.value = 'regolith-remediated';
+    } else if (presetName === 'dust_storm') {
+      pressureInput.value = 45;
+      co2Input.value = 900;
+      photoperiodInput.value = 8;
+      waterLoopInput.value = 92;
+      tempInput.value = 14;
+      mediumSelect.value = 'hydroponics';
+    } else if (presetName === 'hull_breach') {
+      pressureInput.value = 10;
+      co2Input.value = 500;
+      photoperiodInput.value = 16;
+      waterLoopInput.value = 80;
+      tempInput.value = 8;
+      mediumSelect.value = 'regolith-remediated';
+    } else if (presetName === 'the_martian') {
+      pressureInput.value = 55;
+      co2Input.value = 1400;
+      photoperiodInput.value = 16;
+      waterLoopInput.value = 98;
+      tempInput.value = 21;
+      mediumSelect.value = 'regolith-remediated';
+    }
+
+    calculateSimulation();
+  };
+
+  calculateSimulation();
+}
+
+/* ==========================================================================
+   4. FAQ Accordion Interaction
+   ========================================================================== */
+function initFaqAccordion() {
+  const faqItems = document.querySelectorAll('.faq-item');
+
+  faqItems.forEach(item => {
+    const btn = item.querySelector('.faq-btn');
+    const content = item.querySelector('.faq-content');
+    const icon = item.querySelector('.faq-icon');
+
+    if (!btn || !content) return;
+
+    btn.addEventListener('click', () => {
+      const isHidden = content.classList.contains('hidden');
+
+      // Close other accordions
+      faqItems.forEach(other => {
+        const otherContent = other.querySelector('.faq-content');
+        const otherIcon = other.querySelector('.faq-icon');
+        if (otherContent) otherContent.classList.add('hidden');
+        if (otherIcon) otherIcon.classList.remove('rotate-180');
+      });
+
+      if (isHidden) {
+        content.classList.remove('hidden');
+        if (icon) icon.classList.add('rotate-180');
+      }
+    });
+  });
+}
+
+/* ==========================================================================
+   5. Ambient Habitat Audio Synthesizer (Web Audio API)
+   ========================================================================== */
+function initAmbientAudio() {
+  const audioBtn = document.getElementById('audio-toggle-btn');
+  const audioStatus = document.getElementById('audio-status');
+  if (!audioBtn) return;
+
+  let audioCtx = null;
+  let isPlaying = false;
+  let noiseNode = null;
+  let humOsc = null;
+  let masterGain = null;
+
+  audioBtn.addEventListener('click', () => {
+    if (!isPlaying) {
+      startAmbientAudio();
+    } else {
+      stopAmbientAudio();
+    }
+  });
+
+  function startAmbientAudio() {
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AudioContext();
+
+      // Master Gain
+      masterGain = audioCtx.createGain();
+      masterGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      masterGain.connect(audioCtx.destination);
+
+      // Low hum (pressurized pumps / life-support system)
+      humOsc = audioCtx.createOscillator();
+      humOsc.type = 'triangle';
+      humOsc.frequency.setValueAtTime(58, audioCtx.currentTime);
+
+      const humGain = audioCtx.createGain();
+      humGain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+      humOsc.connect(humGain);
+      humGain.connect(masterGain);
+      humOsc.start();
+
+      // Filtered Pink/Brown noise (Habitat atmospheric ventilation airflow)
+      const bufferSize = audioCtx.sampleRate * 2;
+      const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      let b0 = 0, b1 = 0, b2 = 0;
+      for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        b0 = 0.99886 * b0 + white * 0.0555179;
+        b1 = 0.99332 * b1 + white * 0.0750759;
+        b2 = 0.96900 * b2 + white * 0.1538520;
+        output[i] = (b0 + b1 + b2) * 0.25;
+      }
+
+      noiseNode = audioCtx.createBufferSource();
+      noiseNode.buffer = noiseBuffer;
+      noiseNode.loop = true;
+
+      // Low-pass filter for smooth air whoosh sound
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(320, audioCtx.currentTime);
+
+      noiseNode.connect(filter);
+      filter.connect(masterGain);
+      noiseNode.start();
+
+      isPlaying = true;
+      if (audioStatus) audioStatus.textContent = 'Audio: ON (48Hz Ambient)';
+      audioBtn.classList.add('bg-emerald-950', 'text-emerald-300', 'border-emerald-600');
+    } catch (err) {
+      console.warn('Web Audio could not be started:', err);
+    }
+  }
+
+  function stopAmbientAudio() {
+    if (audioCtx) {
+      audioCtx.close();
+      audioCtx = null;
+    }
+    isPlaying = false;
+    if (audioStatus) audioStatus.textContent = 'Audio: OFF';
+    audioBtn.classList.remove('bg-emerald-950', 'text-emerald-300', 'border-emerald-600');
+  }
+}
+
+</script>
+</body>
+</html>
+
